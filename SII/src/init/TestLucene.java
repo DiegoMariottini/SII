@@ -28,12 +28,12 @@ public class TestLucene
 		{
 			//	Specify the analyzer for tokenizing text.
 		    //	The same analyzer should be used for indexing and searching
-			StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_5_4_0);
+			StandardAnalyzer analyzer = new StandardAnalyzer();
 			
 			//	Code to create the index
 			Directory index = new RAMDirectory();
 			
-			IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_5_4_0, analyzer);
+			IndexWriterConfig config = new IndexWriterConfig(analyzer);
 			
 			IndexWriter w = new IndexWriter(index, config);
 			addDoc(w, "Lucene in Action", "193398817");
@@ -48,7 +48,7 @@ public class TestLucene
 			String querystr = args.length > 0 ? args[0] : "teja";
 			
 			//	The \"title\" arg specifies the default field to use when no field is explicitly specified in the query
-			Query q = new QueryParser(Version.LUCENE_5_4_0, "title", analyzer).parse(querystr);
+			Query q = new QueryParser("title", analyzer).parse(querystr);
 			
 			// Searching code
 			int hitsPerPage = 10;
