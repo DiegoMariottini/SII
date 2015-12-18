@@ -45,7 +45,7 @@ public class TestLucene
 			w.close();
 			
 			//	Text to search
-			String querystr = args.length > 0 ? args[0] : "lucene";
+			String querystr = args.length > 0 ? args[0] : "teja";
 			
 			//	The \"title\" arg specifies the default field to use when no field is explicitly specified in the query
 			Query q = new QueryParser("title", analyzer).parse(querystr);
