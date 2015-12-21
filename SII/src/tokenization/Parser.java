@@ -9,6 +9,8 @@ import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -62,13 +64,25 @@ public class Parser {
 	//Riceve il cv e restituisce i token ottenuti
 	public List<String> CreateDataSet (String cv){
 		List<String> results= new LinkedList<>();
-	
-			Document doc = new Document();
-			doc.add(new TextField("id" , cv, Field.Store.YES));
-			Iterator<IndexableField> it=doc.getFields().iterator();
-			while(it.hasNext())
-				results.add(it.next().stringValue());			
 		
+		StandardAnalyzer analyzer = new StandardAnalyzer();
+		TokenStream tokenStream = analyzer.tokenStream("fieldName", cv);
+		OffsetAttribute offsetAttribute = tokenStream.addAttribute(OffsetAttribute.class);
+		CharTermAttribute charTermAttribute = tokenStream.addAttribute(CharTermAttribute.class);
+
+		try {
+			tokenStream.reset();
+			while (tokenStream.incrementToken()) {
+			    int startOffset = offsetAttribute.startOffset();
+			    int endOffset = offsetAttribute.endOffset();
+			    String term = charTermAttribute.toString();
+			    results.add(term);
+			} 
+		}
+			catch (IOException e) {
+				System.out.println(e.getMessage());
+		}
+	
 		return results;
 	}
 	
