@@ -9,9 +9,23 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 
-public class Repository {
+import tokenization.DocParser;
 
-	//Tokenizza un cv
+public class Repository {
+	
+	public Repository(){}
+	
+	//aggiungi un cv a Lucene
+	public void addDocParser(DocParser dp){}
+	
+	//cerca un cv su Lucene
+	public List<DocParser> search(List<String> query){	
+		//TODO
+		return null;
+	}
+	
+/*
+		//Tokenizza un cv
 		//Riceve il cv da userInterface, e invia a db i token ottenuti dal cv
 		public void setParser (String cv){
 			// TODO
@@ -68,5 +82,5 @@ public class Repository {
 		
 			return results;
 		}
-
+*/
 }
