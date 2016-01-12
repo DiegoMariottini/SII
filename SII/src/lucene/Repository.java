@@ -9,7 +9,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 
-public class Depository {
+public class Repository {
 
 	//Tokenizza un cv
 		//Riceve il cv da userInterface, e invia a db i token ottenuti dal cv
