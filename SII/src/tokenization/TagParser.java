@@ -9,10 +9,14 @@ public class TagParser {
 	public TagParser(){}
 	
 	//metodo che trasforma un testo in una lista di tag
-	public List<String> parse(String text){
+	public List<String> parseCV(String text){
 		doc.setText(text);
-		
-		//TODO
+		//TODO usare il metodo parse(String text) per ricavare una lista di tag
+		return null;
+	}
+	
+	public List<String> parseQuery(String text){
+		//TODO fare il parsing dei tag
 		return null;
 	}
 	
@@ -21,6 +25,4 @@ public class TagParser {
 		// fare setList al file DocParser doc
 	}
 
-	
-		
 }
