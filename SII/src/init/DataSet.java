@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 import tokenization.TagParser;
 
 public class DataSet {
@@ -16,9 +18,9 @@ public class DataSet {
 		}
 	
 	
-	public void create (){
+	public void create () throws UnirestException{
 		createListCv();
-		//invio ogni singolo cv alla classe TagParser affinchè sia tokenizzato
+		//invio ogni singolo cv alla classe TagParser affinchï¿½ sia tokenizzato
 		Iterator<String> it= cv.iterator();
 		while (it.hasNext()){
 			String text= it.next();
@@ -29,7 +31,7 @@ public class DataSet {
 	
 	//inserimento manuale dei cv
 	public void createListCv(){
-		cv.add("PAOLO ROSSI Residenza: Via dei Ciclamini, 4 Cap. 60500 Città Pescara Prov. PE Tel. ..085/22222Domicilio: Via .delle Rose, 15..Cap. .20100. Cittï¿½ Milano.. Prov. .MI. Tel. .02/333333.Cell. 335/555555e-mail info@cvlavoro.comNato a Pescara. il 26/6/1981. Nazionalità Italiana. Stato civile celibe. Patente di guida B. Servizio civile volontario svolto nel 2004 presso il Comune di Milano, area servizi sociali per i minori.");
+		cv.add("PAOLO ROSSI Residenza: Via dei Ciclamini, 4 Cap. 60500 Cittï¿½ Pescara Prov. PE Tel. ..085/22222Domicilio: Via .delle Rose, 15..Cap. .20100. Cittï¿½ Milano.. Prov. .MI. Tel. .02/333333.Cell. 335/555555e-mail info@cvlavoro.comNato a Pescara. il 26/6/1981. Nazionalitï¿½ Italiana. Stato civile celibe. Patente di guida B. Servizio civile volontario svolto nel 2004 presso il Comune di Milano, area servizi sociali per i minori.");
 		cv.add("");
 		cv.add("");
 		cv.add("");
