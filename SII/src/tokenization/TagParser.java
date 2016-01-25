@@ -13,7 +13,10 @@ public class TagParser {
 	private List<String> tags;
 
 	//Costruttore
-	public TagParser(){}
+	public TagParser(){
+		doc = new DocParser();
+		tags = new LinkedList<String>();
+	}
 	
 	//metodo per parsare un nuovo cv
 	public List<String> parseCV(String text) throws UnirestException{
@@ -42,12 +45,13 @@ public class TagParser {
 		List<String> tagList = new LinkedList<String>();
 		HttpResponse<JsonNode> jsonResponse = Unirest.post("http://tagme.di.unipi.it/tag")
 				  .header("accept", "application/json")
-				  .field("text", text)
+				  .queryString("text", text)
 				  .field("key", "8020b57e2d41b6041c4fd06937acbec7")
 				  .field("lang","it")
 				  .field("include_categories","true")
 				  .field("long_text", "0")
 				  .asJson();
+		System.out.println(jsonResponse.getBody().toString());
 		return tagList;
 	}
 }
