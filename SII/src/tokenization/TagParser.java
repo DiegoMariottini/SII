@@ -45,7 +45,7 @@ public class TagParser {
 		List<String> tagList = new LinkedList<String>();
 		HttpResponse<JsonNode> jsonResponse = Unirest.post("http://tagme.di.unipi.it/tag")
 				  .header("accept", "application/json")
-				  .queryString("text", text)
+				  .field("text", text)
 				  .field("key", "8020b57e2d41b6041c4fd06937acbec7")
 				  .field("lang","it")
 				  .field("include_categories","true")
