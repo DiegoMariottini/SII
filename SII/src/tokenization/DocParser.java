@@ -5,9 +5,9 @@ import java.util.List;
 
 // oggetto da passare a lucene
 public class DocParser {
-	private String text; //testo intero del cv
-	private List<String> entity; // lista dei tag del cv
-	private List<String> dbpedia;
+	private String text; //testo intero
+	private List<String> entity; // lista dei tag
+	private List<String> dbpedia; // lista delle categorie di dbpedia dei tag
 	
 	public DocParser(){
 		entity = new LinkedList<String>();
