@@ -1,30 +1,37 @@
 package tokenization;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
+import org.json.*;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import lucene.Repository;
+
 public class TagParser {
-	private DocParser doc;
-	private List<String> tags;
+	private DocParser dp;
+	final Repository rep;
 
 	//Costruttore
 	public TagParser(){
-		doc = new DocParser();
-		tags = new LinkedList<String>();
+		dp = new DocParser();
+		rep = new Repository();
 	}
 	
 	//metodo per parsare un nuovo cv
 	public List<String> parseCV(String text) throws UnirestException{
-		doc.setText(text);
+		dp.setText(text);
 		//genero la lista di tag da TAGME
-		tags = getTagsFromText(text);
-		doc.setEntity(tags);
-		return tags;
+		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
+		tagMap = getTagsFromText(text);
+		dp.setEntity(tagMap.get("entity"));
+		dp.setDbpedia(tagMap.get("dbpedia_cat"));
+		//aggiungo il cv nel repository
+		rep.addDocParser(dp);
+		return tagMap.get("entity");
 	}
 
 	//metodo per parsare la query
@@ -36,13 +43,13 @@ public class TagParser {
 	//metodo per aggiornare la lista di tag
 	public void updateList(List<String> tag){
 		//sostituisce la lista dei tag del documento con quella data in input
-		doc.setEntity(tag);
+		dp.setEntity(tag);
 	}
 	
 	//metodo per ricavare la lista di tag tramite TAGME
-	private List<String> getTagsFromText(String text) throws UnirestException {
+	private Map<String, LinkedList<String>> getTagsFromText(String text) throws UnirestException {
 		//TODO ricava la lista di tag tramite TAGME
-		List<String> tagList = new LinkedList<String>();
+		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
 		HttpResponse<JsonNode> jsonResponse = Unirest.post("http://tagme.di.unipi.it/tag")
 				  .header("accept", "application/json")
 				  .field("text", text)
@@ -52,6 +59,9 @@ public class TagParser {
 				  .field("long_text", "0")
 				  .asJson();
 		System.out.println(jsonResponse.getBody().toString());
-		return tagList;
+		JSONObject jsonObject = new JSONObject(jsonResponse.getBody().getObject());
+		JSONArray jsonArr = jsonObject.getJSONArray("annotations");
+		
+		return tagMap;
 	}
 }

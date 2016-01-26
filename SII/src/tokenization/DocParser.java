@@ -7,10 +7,11 @@ import java.util.List;
 public class DocParser {
 	private String text; //testo intero del cv
 	private List<String> entity; // lista dei tag del cv
-	
+	private List<String> dbpedia;
 	
 	public DocParser(){
 		entity = new LinkedList<String>();
+		dbpedia = new LinkedList<String>();
 	}
 	
 	public String getText() {
@@ -27,5 +28,12 @@ public class DocParser {
 		this.entity = entity;
 	}
 
+	public List<String> getDbpedia() {
+		return dbpedia;
+	}
+
+	public void setDbpedia(List<String> dbpedia) {
+		this.dbpedia = dbpedia;
+	}
 	
 }
