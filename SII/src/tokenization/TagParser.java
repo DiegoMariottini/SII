@@ -23,7 +23,7 @@ public class TagParser {
 	//metodo per parsare un nuovo cv
 	public List<String> parseCV(String text) throws UnirestException{
 		dp.setText(text);
-		//genero la lista di tag da TAGME
+		//genero le liste di tag da TAGME
 		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
 		tagMap = getTagsFromText(text);
 		//imposto il DocParser
@@ -37,14 +37,21 @@ public class TagParser {
 	}
 
 	//metodo per parsare la query
-	public List<String> parseQuery(String text){
-		//TODO fare il parsing dei tag
+	public List<String> parseQuery(String text) throws UnirestException{
+		//TODO finire di fare l'operazione di search da Lucene
+		//genero le liste di tag della query da TAGME
+		Map<String, LinkedList<String>> qtagMap = new HashMap<String, LinkedList<String>>();
+		qtagMap = getTagsFromText(text);
+		//imposto il DocParser
+		dp.setEntity(qtagMap.get("entity"));
+		dp.setDbpedia(qtagMap.get("dbpedia_cat"));
 		return null;
 	}
 	
 	//metodo per aggiornare la lista di tag
 	public void updateList(List<String> tag){
 		//sostituisce la lista dei tag del documento con quella data in input
+		//TODO fare che sistemi anche la lista delle categorie di dbpedia?
 		dp.setEntity(tag);
 	}
 	
