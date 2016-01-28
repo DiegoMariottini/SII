@@ -31,6 +31,8 @@ public class TagParser {
 		dp.setDbpedia(tagMap.get("dbpedia_cat"));
 		//aggiungo il cv nel repository
 		rep.addDocParser(dp);
+		//print di check della lista di tag ottenuti
+		//System.out.println(tagMap.get("entity").toString());
 		return tagMap.get("entity");
 	}
 
@@ -48,9 +50,9 @@ public class TagParser {
 	
 	//metodo per ricavare la lista di tag tramite TAGME
 	private Map<String, LinkedList<String>> getTagsFromText(String text) throws UnirestException {
-		//TODO ricava la lista di tag tramite TAGME
 		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
-		//TODO inizializza le liste nella mappa
+		tagMap.put("entity", new LinkedList<String>());
+		tagMap.put("dbpedia_cat", new LinkedList<String>());
 		HttpResponse<JsonNode> jsonResponse = Unirest.post("http://tagme.di.unipi.it/tag")
 				  .header("accept", "application/json")
 				  .field("text", text)
@@ -59,7 +61,8 @@ public class TagParser {
 				  .field("include_categories","true")
 				  .field("long_text", "0")
 				  .asJson();
-		System.out.println(jsonResponse.getBody().toString() + "\n");
+		//print di check dell'oggetto json
+		//System.out.println(jsonResponse.getBody().toString() + "\n");
 		JSONArray jsonArr = jsonResponse.getBody().getObject().getJSONArray("annotations");
 		
 		for(int i=0;i<jsonArr.length();i++)
