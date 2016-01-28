@@ -38,8 +38,11 @@ public class Repository {
 	private final String ENTITY="entity"; //nome dei campi 
 	private final String DBPEDIA="dbpedia";
 	private final String CV="cv";
-	private final int ON_DBPEDIA=2; //valore peso
-	private final int ON_ENTITY=1;
+	private final int ENTITY_ON_ENTITY=5; //valore peso
+	private final int ENTITY_ON_DBPEDIA=3; 
+	private final int DBPEDIA_ON_ENTITY=2;
+	private final int DBPEDIA_ON_DBPEDIA=1; 
+	
 	
 	public Repository(){}
 	
@@ -87,20 +90,55 @@ public class Repository {
 			Query queryDbpediaOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr2);	
 			Query queryDbpediaOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr2);
 			//invio la ricerca delle singole query a Lucene e inserisco i risultati nella lista result
-			searchLucene(queryEntityOnEntity,dp.getEntity(),ON_ENTITY);
-			searchLucene(queryEntityOnDbpedia, dp.getEntity(),ON_DBPEDIA);
-			searchLucene(queryDbpediaOnEntity, dp.getDbpedia(),ON_ENTITY);
-			searchLucene(queryDbpediaOnDbpedia, dp.getDbpedia(),ON_DBPEDIA);
+			searchLucene(queryEntityOnEntity);
+			searchLucene(queryEntityOnDbpedia);
+			searchLucene(queryDbpediaOnEntity);
+			searchLucene(queryDbpediaOnDbpedia);
+			//calcolo i pesi di ogni doc presente in result
+			makeWeight(dp);
 		} catch (ParseException e) {
 			
 			System.out.println(e.getMessage());
 		}
 		//elimino i doppioni
-		deleteDuplicate();
 		return result;
 	}
 	
 	
+
+	private void makeWeight(DocParser doc_query) {
+		Iterator<DocParser> it= result.iterator();
+		while(it.hasNext()){
+			DocParser dp= it.next();
+			measureWeight(doc_query, dp);
+		}
+		
+	}
+
+	private void measureWeight(DocParser doc_query, DocParser doc_result) {
+		int count_eONe= counter(doc_query.getEntity(), doc_result.getEntity());
+		int count_eONd= counter(doc_query.getEntity(), doc_result.getDbpedia());
+		int count_dONe= counter(doc_query.getDbpedia(), doc_result.getEntity());
+		int count_dONd= counter(doc_query.getDbpedia(), doc_result.getDbpedia());
+		double weight=(count_eONe*ENTITY_ON_ENTITY)+(count_eONd*ENTITY_ON_DBPEDIA)
+						+(count_dONe*DBPEDIA_ON_ENTITY)+(count_dONd*DBPEDIA_ON_DBPEDIA);
+		doc_result.setWeight(weight);
+	}
+
+	//conta quanti elementi hanno in comune due liste
+	private int counter(List<String> list1, List<String> list2) {
+		int tot=0;
+		Iterator<String> it1= list1.iterator();
+		Iterator<String> it2= list2.iterator();
+		while(it1.hasNext()){
+			String s1=it1.next();
+			while(it2.hasNext()){
+				String s2=it2.next();
+				if(s1.equalsIgnoreCase(s2)) tot++;
+			}
+		}
+		return tot;
+	}
 
 	public String FromTagToString (String Startquery, List<String> tags){
 		String query=Startquery;
@@ -112,7 +150,7 @@ public class Repository {
 	}
 	
 	
-	public void searchLucene (Query query, List<String> tags, int value) throws IOException{
+	public void searchLucene (Query query) throws IOException{
 		try {
 			//apro l'indice di lettura del file
 			IndexReader reader = DirectoryReader.open(index);
@@ -126,7 +164,7 @@ public class Repository {
 				int docId=hits[i].doc;
 				Document doc =searcher.doc(docId);
 				 if (isOnResult(docId)) return;
-				    else addInResult(doc,docId, tags, value);
+				    else addInResult(doc,docId);
 			    }
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -134,7 +172,7 @@ public class Repository {
 		
 	}
 	
-	public void addInResult(Document doc, int docId, List<String> tags, int value) {
+	public void addInResult(Document doc, int docId) {
 		//prelevo tutti i campi salvati di doc
 		String text= doc.get(CV);
 		String [] tags_entity=doc.getValues(ENTITY);
@@ -148,9 +186,6 @@ public class Repository {
 	    dp.setText(text);
 	    dp.setDbpedia(tags_dbpedia_list);
 	    dp.setEntity(tags_entity_list);
-	    
-	    //calcola peso
-	  
 	    
 	    //inserisco docParser nella lista result
 	    result.add(dp);	   
@@ -175,13 +210,5 @@ public class Repository {
 		return false;
 	}  
 	
-
-	//elimino i doppioni dalla lista dei risultati, e fondo insieme i loro tag
-		private void deleteDuplicate() {
-			// TODO Auto-generated method stub
-			
-		}
-
-
 	
 }
