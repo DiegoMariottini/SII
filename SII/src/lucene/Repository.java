@@ -33,7 +33,13 @@ public class Repository {
 	private Directory index;
 	private StandardAnalyzer analyzer;
 	private IndexSearcher searcher;
+	private List<DocParser> result= new LinkedList<DocParser>();
 	private int hitsPerPage = 10; //Numero massimo di cv che vengono restituiti dalla search
+	private final String ENTITY="entity"; //nome dei campi 
+	private final String DBPEDIA="dbpedia";
+	private final String CV="cv";
+	private final int ON_DBPEDIA=2; //valore peso
+	private final int ON_ENTITY=1;
 	
 	public Repository(){}
 	
@@ -48,12 +54,18 @@ public class Repository {
 			IndexWriter w = new IndexWriter(index, config);
 			Document doc = new Document();
 			//inserisco il testo completo del cv
-			doc.add(new TextField("cv" , dp.getText(), Field.Store.YES));
+			doc.add(new TextField(CV , dp.getText(), Field.Store.YES));
 			//inserisco i singoli tag
 			Iterator<String> it= dp.getEntity().iterator();
 			while(it.hasNext()){
-				doc.add(new StringField("entity" , it.next(), Field.Store.YES));
+				doc.add(new StringField(ENTITY , it.next(), Field.Store.YES));
 			}
+			//inserisco i singoli tag delle categorie di dbpedia dei tag
+			Iterator<String> it2= dp.getDbpedia().iterator();
+			while(it2.hasNext()){
+				doc.add(new StringField(DBPEDIA , it2.next(), Field.Store.YES));
+			}
+			//aggiungo doc al file
 			w.addDocument(doc);
 			w.close();
 		} 
@@ -63,35 +75,35 @@ public class Repository {
 		
 	}
 	
-	//cerca un cv su Lucene
-	public List<String> search(List<String> tags) throws IOException{	
-		List<String> cv= new LinkedList<>();
-		//Trasformo lista di tag in una stringa
-		String querystr=FromTagToString(tags);
+	//cerca un cv su Lucene e restituisce una lista di doc che corrispondono ai parametri
+	public List<DocParser> search(DocParser dp) throws ParseException, IOException{	
+		//Trasformo lista di tag in due stringhe: una per i tag principali e uno per gli altri
+		String querystr1=FromTagToString("",dp.getEntity());
+		String querystr2=FromTagToString(querystr1,dp.getDbpedia());
 		try {
-			//parso la query
-			Query q = new QueryParser("entity", analyzer).parse(querystr);
-			//apro l'indice di lettura del file
-			IndexReader reader = DirectoryReader.open(index);
-		    searcher = new IndexSearcher(reader);
-		    //Fa la ricerca e restituisce un numero max di doc che matchano con la query
-		    TopDocs docs=searcher.search(q, hitsPerPage);
-		    //trasformo la lista in un vettore di doc
-		    ScoreDoc[] hits = docs.scoreDocs;
-		    //Ricavo da ogni documento il testo dei cv 
-		    for (int i = 0; i < hits.length; i++) {
-		        Document doc =getDocument(hits[i].doc);
-		        cv.add(doc.get("cv"));
-		        }
+			//parso le query, sia per le entity che per le dbpedia, per entrambe le query
+			Query queryEntityOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr1);
+			Query queryEntityOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr1);
+			Query queryDbpediaOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr2);	
+			Query queryDbpediaOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr2);
+			//invio la ricerca delle singole query a Lucene e inserisco i risultati nella lista result
+			searchLucene(queryEntityOnEntity,dp.getEntity(),ON_ENTITY);
+			searchLucene(queryEntityOnDbpedia, dp.getEntity(),ON_DBPEDIA);
+			searchLucene(queryDbpediaOnEntity, dp.getDbpedia(),ON_ENTITY);
+			searchLucene(queryDbpediaOnDbpedia, dp.getDbpedia(),ON_DBPEDIA);
 		} catch (ParseException e) {
 			
 			System.out.println(e.getMessage());
 		}
-		return cv;
+		//elimino i doppioni
+		deleteDuplicate();
+		return result;
 	}
 	
-	public String FromTagToString (List<String> tags){
-		String query="";
+	
+
+	public String FromTagToString (String Startquery, List<String> tags){
+		String query=Startquery;
 		Iterator<String> it= tags.iterator();
 		while(it.hasNext()){
 			query= query + " " + it.next();
@@ -99,9 +111,77 @@ public class Repository {
 		return query;
 	}
 	
-	public Document getDocument(int docId) throws IOException {
-		        return searcher.doc(docId);
-		    }
+	
+	public void searchLucene (Query query, List<String> tags, int value) throws IOException{
+		try {
+			//apro l'indice di lettura del file
+			IndexReader reader = DirectoryReader.open(index);
+			searcher = new IndexSearcher(reader);
+			//Fa la ricerca e restituisce un numero max di doc che matchano con la query
+			TopDocs docs=searcher.search(query, hitsPerPage);
+			//trasformo la lista in un vettore di doc
+			ScoreDoc[] hits = docs.scoreDocs;
+			//Ricavo da ogni documento che matcha con la query 
+			for (int i = 0; i < hits.length; i++) {
+				int docId=hits[i].doc;
+				Document doc =searcher.doc(docId);
+				 if (isOnResult(docId)) return;
+				    else addInResult(doc,docId, tags, value);
+			    }
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	public void addInResult(Document doc, int docId, List<String> tags, int value) {
+		//prelevo tutti i campi salvati di doc
+		String text= doc.get(CV);
+		String [] tags_entity=doc.getValues(ENTITY);
+		List<String> tags_entity_list= FromVectorToList(tags_entity);
+		String [] tags_dbpedia=doc.getValues(DBPEDIA);
+		List<String> tags_dbpedia_list= FromVectorToList(tags_dbpedia);
+		
+		//creo un docParser equivalente al doc 
+		DocParser dp= new DocParser();
+	    dp.setId(docId);
+	    dp.setText(text);
+	    dp.setDbpedia(tags_dbpedia_list);
+	    dp.setEntity(tags_entity_list);
+	    
+	    //calcola peso
+	  
+	    
+	    //inserisco docParser nella lista result
+	    result.add(dp);	   
+    }
+	
+	
+	private List<String> FromVectorToList(String[] tags) {
+		List<String> tags_list= new LinkedList<String>();
+		for(int i=0; i< tags.length; i++){
+			tags_list.add(tags[i]);
+		}
+		return tags_list;
+	}
+
+	//verifico se un doc è già presente nella lista
+	public boolean isOnResult(int docId){
+		Iterator<DocParser> it= result.iterator();
+		while(it.hasNext()){
+			DocParser dp= it.next();
+			if(dp.getId()==docId) return true;
+		}
+		return false;
+	}  
+	
+
+	//elimino i doppioni dalla lista dei risultati, e fondo insieme i loro tag
+		private void deleteDuplicate() {
+			// TODO Auto-generated method stub
+			
+		}
+
 
 	
 }
