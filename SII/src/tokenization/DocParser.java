@@ -8,6 +8,7 @@ public class DocParser {
 	private String text; //testo intero
 	private List<String> entity; // lista dei tag
 	private List<String> dbpedia; // lista delle categorie di dbpedia dei tag
+	private double weight;
 	
 	public DocParser(){
 		entity = new LinkedList<String>();
@@ -34,6 +35,14 @@ public class DocParser {
 
 	public void setDbpedia(List<String> dbpedia) {
 		this.dbpedia = dbpedia;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 	
 }
