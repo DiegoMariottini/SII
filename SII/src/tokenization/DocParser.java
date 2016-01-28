@@ -9,6 +9,7 @@ public class DocParser {
 	private List<String> entity; // lista dei tag
 	private List<String> dbpedia; // lista delle categorie di dbpedia dei tag
 	private double weight;
+	private int id;
 	
 	public DocParser(){
 		entity = new LinkedList<String>();
@@ -43,6 +44,14 @@ public class DocParser {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }
