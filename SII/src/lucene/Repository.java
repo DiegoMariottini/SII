@@ -61,12 +61,14 @@ public class Repository {
 			//inserisco i singoli tag
 			Iterator<String> it= dp.getEntity().iterator();
 			while(it.hasNext()){
-				doc.add(new StringField(ENTITY , it.next(), Field.Store.YES));
+				String tag=it.next();
+				if(tag!=null) doc.add(new StringField(ENTITY , tag, Field.Store.YES));
 			}
 			//inserisco i singoli tag delle categorie di dbpedia dei tag
 			Iterator<String> it2= dp.getDbpedia().iterator();
 			while(it2.hasNext()){
-				doc.add(new StringField(DBPEDIA , it2.next(), Field.Store.YES));
+				String tag=it2.next();
+				if(tag!=null) doc.add(new StringField(DBPEDIA , tag, Field.Store.YES));
 			}
 			//aggiungo doc al file
 			w.addDocument(doc);
@@ -100,7 +102,6 @@ public class Repository {
 			
 			System.out.println(e.getMessage());
 		}
-		//elimino i doppioni
 		return result;
 	}
 	
