@@ -1,6 +1,9 @@
 package tokenization;
 
+import java.io.IOException;
 import java.util.*;
+
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.json.*;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -37,15 +40,21 @@ public class TagParser {
 	}
 
 	//metodo per parsare la query
-	public List<String> parseQuery(String text) throws UnirestException{
-		//TODO finire di fare l'operazione di search da Lucene
+	public List<DocParser> parseQuery(String text) throws UnirestException{
 		//genero le liste di tag della query da TAGME
 		Map<String, LinkedList<String>> qtagMap = new HashMap<String, LinkedList<String>>();
 		qtagMap = getTagsFromText(text);
 		//imposto il DocParser
 		dp.setEntity(qtagMap.get("entity"));
 		dp.setDbpedia(qtagMap.get("dbpedia_cat"));
-		return null;
+		//faccio la search dei documenti nel repository
+		List<DocParser> listDP = new LinkedList<DocParser>();
+		try {
+			listDP = rep.search(dp);
+		} catch (ParseException | IOException e) {
+			e.printStackTrace();
+		}
+		return listDP;
 	}
 	
 	//metodo per aggiornare la lista di tag
