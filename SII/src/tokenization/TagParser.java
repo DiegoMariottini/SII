@@ -36,6 +36,7 @@ public class TagParser {
 		rep.addDocParser(dp);
 		//print di check della lista di tag ottenuti
 		//System.out.println(tagMap.get("entity").toString());
+		//System.out.println(tagMap.get("dbpedia_cat").toString());
 		return tagMap.get("entity");
 	}
 
@@ -80,12 +81,15 @@ public class TagParser {
 		//print di check dell'oggetto json
 		//System.out.println(jsonResponse.getBody().toString() + "\n");
 		JSONArray jsonArr = jsonResponse.getBody().getObject().getJSONArray("annotations");
-		
 		for(int i=0;i<jsonArr.length();i++)
 		{
 		    JSONObject jOb = jsonArr.getJSONObject(i);
+		    JSONArray jObArr = jOb.getJSONArray("dbpedia_categories");
 		    String entity = jOb.getString("title");
-		    String[] dbcat = new String[jOb.getJSONArray("dbpedia_categories").length()]; 
+		    String[] dbcat = new String[jObArr.length()];
+		    for(int j=0; j<jObArr.length(); j++){
+		    	dbcat[j] = jObArr.getString(j);
+		    };
 		    List<String> dbcatList = new LinkedList<String>(Arrays.asList(dbcat));
 		    tagMap.get("entity").add(entity);
 		    tagMap.get("dbpedia_cat").addAll(dbcatList);
