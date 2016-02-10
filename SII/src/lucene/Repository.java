@@ -50,7 +50,7 @@ public class Repository {
 	public void addDocParser(DocParser dp){
 		analyzer = new StandardAnalyzer();
 		
-		index = new RAMDirectory();		
+		index = new RAMDirectory();		//RAMDirectory@a41516
 		IndexWriterConfig config = new IndexWriterConfig(analyzer);
 		
 		try {
@@ -62,13 +62,13 @@ public class Repository {
 			Iterator<String> it= dp.getEntity().iterator();
 			while(it.hasNext()){
 				String tag=it.next();
-				if(tag!=null) doc.add(new StringField(ENTITY , tag, Field.Store.YES));
+				if(tag!=null) doc.add(new TextField(ENTITY , tag, Field.Store.YES));
 			}
 			//inserisco i singoli tag delle categorie di dbpedia dei tag
 			Iterator<String> it2= dp.getDbpedia().iterator();
 			while(it2.hasNext()){
 				String tag=it2.next();
-				if(tag!=null) doc.add(new StringField(DBPEDIA , tag, Field.Store.YES));
+				if(tag!=null) doc.add(new TextField(DBPEDIA , tag, Field.Store.YES));
 			}
 			//aggiungo doc al file
 			w.addDocument(doc);
