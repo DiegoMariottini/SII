@@ -23,6 +23,26 @@ public class TagParser {
 		rep = new Repository();
 	}
 	
+	//metodo per trovare i tag di un CV in input
+	public DocParser parseTags(String text) throws UnirestException{
+		dp.setText(text);
+		//genero le liste di tag da TAGME
+		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
+		tagMap = getTagsFromText(text);
+		//imposto il DocParser
+		dp.setEntity(tagMap.get("entity"));
+		dp.setDbpedia(tagMap.get("dbpedia_cat"));
+		return dp;
+	}
+	
+	//metodo per salvare un nuovo documento nel repository
+	public void saveCV(DocParser dp){
+		//aggiungo il cv nel repository
+		rep.addDocParser(dp);
+	}
+	
+	//METODO PROVVISORIO PER FARE TEST
+	//TODO da cancellare al termine delle prove
 	//metodo per parsare un nuovo cv
 	public List<String> parseCV(String text) throws UnirestException{
 		dp.setText(text);

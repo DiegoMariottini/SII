@@ -10,6 +10,7 @@ public class DocParser {
 	private List<String> dbpedia; // lista delle categorie di dbpedia dei tag
 	private double weight;
 	private int id;
+	private List<String> matchedTags; //lista di tag trovati che matchano in search
 	
 	public DocParser(){
 		entity = new LinkedList<String>();
@@ -53,5 +54,14 @@ public class DocParser {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public List<String> getMatchedTags() {
+		return matchedTags;
+	}
+
+	public void setMatchedTags(List<String> matchedTags) {
+		this.matchedTags = matchedTags;
+	}
+	
 	
 }
