@@ -48,8 +48,9 @@ public class Repository {
 	public Repository(){
 		analyzer = new StandardAnalyzer();
 		index = new RAMDirectory();		//RAMDirectory@a41516
-		
+
 		}
+	
 	
 	//aggiungi un cv a Lucene
 	public void addDocParser(DocParser dp){
@@ -93,13 +94,13 @@ public class Repository {
 			//parso le query, sia per le entity che per le dbpedia, per entrambe le query
 			Query queryEntityOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr1);
 			Query queryEntityOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr1);
-			//Query queryDbpediaOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr2);	
-			//Query queryDbpediaOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr2);
+			Query queryDbpediaOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr2);	
+			Query queryDbpediaOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr2);
 			//invio la ricerca delle singole query a Lucene e inserisco i risultati nella lista result
 			searchLucene(queryEntityOnEntity);
 			searchLucene(queryEntityOnDbpedia);
-			//searchLucene(queryDbpediaOnEntity);
-			//searchLucene(queryDbpediaOnDbpedia);
+			searchLucene(queryDbpediaOnEntity);
+			searchLucene(queryDbpediaOnDbpedia);
 			//calcolo i pesi di ogni doc presente in result
 			makeWeight(dp);
 		} catch (ParseException e) {
@@ -149,7 +150,8 @@ public class Repository {
 		String query=Startquery;
 		Iterator<String> it= tags.iterator();
 		while(it.hasNext()){
-			query= query + " " + it.next();
+			String tag=it.next();
+			query= query + " " + tag;
 		}
 		return query;
 	}
