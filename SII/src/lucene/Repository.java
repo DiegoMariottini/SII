@@ -33,6 +33,7 @@ public class Repository {
 	private Directory index;
 	private StandardAnalyzer analyzer;
 	private IndexSearcher searcher;
+	private IndexWriter w;
 	private List<DocParser> result= new LinkedList<DocParser>();
 	private int hitsPerPage = 10; //Numero massimo di cv che vengono restituiti dalla search
 	private final String ENTITY="entity"; //nome dei campi 
@@ -44,17 +45,18 @@ public class Repository {
 	private final int DBPEDIA_ON_DBPEDIA=1; 
 	
 	
-	public Repository(){}
+	public Repository(){
+		analyzer = new StandardAnalyzer();
+		index = new RAMDirectory();		//RAMDirectory@a41516
+		
+		}
 	
 	//aggiungi un cv a Lucene
 	public void addDocParser(DocParser dp){
-		analyzer = new StandardAnalyzer();
-		
-		index = new RAMDirectory();		//RAMDirectory@a41516
-		IndexWriterConfig config = new IndexWriterConfig(analyzer);
-		
 		try {
-			IndexWriter w = new IndexWriter(index, config);
+			IndexWriterConfig config = new IndexWriterConfig(analyzer);
+			w = new IndexWriter(index, config);
+			
 			Document doc = new Document();
 			//inserisco il testo completo del cv
 			doc.add(new TextField(CV , dp.getText(), Field.Store.YES));
@@ -71,14 +73,16 @@ public class Repository {
 				if(tag!=null) doc.add(new TextField(DBPEDIA , tag, Field.Store.YES));
 			}
 			//aggiungo doc al file
-			w.addDocument(doc);
-			w.close();
+				w.addDocument(doc);
+				w.close();
+			}
+			catch (IOException e) {
+				System.out.println("Errore writer");
+				}
+			
 		} 
-		catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
 		
-	}
+		
 	
 	//cerca un cv su Lucene e restituisce una lista di doc che corrispondono ai parametri
 	public List<DocParser> search(DocParser dp) throws ParseException, IOException{	
@@ -89,13 +93,13 @@ public class Repository {
 			//parso le query, sia per le entity che per le dbpedia, per entrambe le query
 			Query queryEntityOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr1);
 			Query queryEntityOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr1);
-			Query queryDbpediaOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr2);	
-			Query queryDbpediaOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr2);
+			//Query queryDbpediaOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr2);	
+			//Query queryDbpediaOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr2);
 			//invio la ricerca delle singole query a Lucene e inserisco i risultati nella lista result
 			searchLucene(queryEntityOnEntity);
 			searchLucene(queryEntityOnDbpedia);
-			searchLucene(queryDbpediaOnEntity);
-			searchLucene(queryDbpediaOnDbpedia);
+			//searchLucene(queryDbpediaOnEntity);
+			//searchLucene(queryDbpediaOnDbpedia);
 			//calcolo i pesi di ogni doc presente in result
 			makeWeight(dp);
 		} catch (ParseException e) {
