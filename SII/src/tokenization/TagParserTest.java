@@ -13,9 +13,9 @@ public class TagParserTest {
 		parser.parseCV(prova1);
 		parser.parseCV(prova2);
 		List<DocParser> lista = new LinkedList<DocParser>();
-		lista = parser.parseQuery("Roma, Pescara");
+		lista = parser.parseQuery("calciatore");
 		for(DocParser dp : lista){
-			System.out.println(dp.getText() + "\n");
+			System.out.println(dp.getMatchedTags() + "\n");
 		}
 	}
 

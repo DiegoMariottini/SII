@@ -17,6 +17,7 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -97,10 +98,10 @@ public class Repository {
 			Query queryDbpediaOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr2);	
 			Query queryDbpediaOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr2);
 			//invio la ricerca delle singole query a Lucene e inserisco i risultati nella lista result
-			searchLucene(queryEntityOnEntity);
-			searchLucene(queryEntityOnDbpedia);
-			searchLucene(queryDbpediaOnEntity);
-			searchLucene(queryDbpediaOnDbpedia);
+			searchLucene(queryEntityOnEntity,dp);
+			searchLucene(queryEntityOnDbpedia,dp);
+			searchLucene(queryDbpediaOnEntity,dp);
+			searchLucene(queryDbpediaOnDbpedia,dp);
 			//calcolo i pesi di ogni doc presente in result
 			makeWeight(dp);
 		} catch (ParseException e) {
@@ -157,21 +158,28 @@ public class Repository {
 	}
 	
 	
-	public void searchLucene (Query query) throws IOException{
+	public void searchLucene (Query query, DocParser dp) throws IOException{
 		try {
 			//apro l'indice di lettura del file
 			IndexReader reader = DirectoryReader.open(index);
 			searcher = new IndexSearcher(reader);
+	
 			//Fa la ricerca e restituisce un numero max di doc che matchano con la query
 			TopDocs docs=searcher.search(query, hitsPerPage);
 			//trasformo la lista in un vettore di doc
 			ScoreDoc[] hits = docs.scoreDocs;
+			   
 			//Ricavo da ogni documento che matcha con la query 
 			for (int i = 0; i < hits.length; i++) {
 				int docId=hits[i].doc;
+				
+				Explanation explanation = searcher.explain(query, hits[i].doc);
+				System.out.println(explanation.toString());
+				
 				Document doc =searcher.doc(docId);
+				
 				 if (isOnResult(docId)) return;
-				    else addInResult(doc,docId);
+				    else addInResult(doc,docId,explanation);
 			    }
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -179,7 +187,7 @@ public class Repository {
 		
 	}
 	
-	public void addInResult(Document doc, int docId) {
+	public void addInResult(Document doc, int docId, Explanation explanation) {
 		//prelevo tutti i campi salvati di doc
 		String text= doc.get(CV);
 		String [] tags_entity=doc.getValues(ENTITY);
@@ -193,6 +201,20 @@ public class Repository {
 	    dp.setText(text);
 	    dp.setDbpedia(tags_dbpedia_list);
 	    dp.setEntity(tags_entity_list);
+	    
+	    //trovo i tag matchati
+	    List<String> tags_match= new LinkedList<String>();
+//	    (explanation.getEntity()).addAll(explanation.getDbpedia());
+//	    tags_entity_list.addAll(tags_dbpedia_list);
+//	    Iterator<String> it= tags_entity_list.iterator();
+//	    Iterator<String> it2= explanation.getEntity().iterator();
+//	    while(it.hasNext()){
+//	    	String tag= it.next();
+//	    	 while(it2.hasNext()){
+//	    	 if(tag.equals(it2.next())) tags_match.add(tag);
+//	    	 }
+//	    }
+	    dp.setMatchedTags(tags_match);
 	    
 	    //inserisco docParser nella lista result
 	    result.add(dp);	   
@@ -216,6 +238,8 @@ public class Repository {
 		}
 		return false;
 	}  
+	
+
 	
 	
 }
