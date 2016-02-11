@@ -35,8 +35,8 @@ public class TagParserTest {
 		List<DocParser> lista = new LinkedList<DocParser>();
 		lista = parser.parseQuery("Pescara");
 		for(DocParser dp : lista){
-			System.out.println(dp.getText() + "\n");
 		}
+		
 	}
 
 }

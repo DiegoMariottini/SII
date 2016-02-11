@@ -49,7 +49,11 @@ public class Repository {
 	public Repository(){
 		analyzer = new StandardAnalyzer();
 		index = new RAMDirectory();		//RAMDirectory@a41516
-
+		//Directory dir = FSDirectory.open(new File("myDire"));
+//		Analyzer analyzer = new StandardAnalyzer();
+//	    IndexWriterConfig iwc = new IndexWriterConfig(Version.LUCENE_4_10_0, analyzer);
+//	    iwc.setOpenMode(OpenMode.CREATE);
+//	    IndexWriter writer = new IndexWriter(dir, iwc);
 		}
 	
 	
@@ -141,7 +145,7 @@ public class Repository {
 			String s1=it1.next();
 			while(it2.hasNext()){
 				String s2=it2.next();
-				if(s1.equalsIgnoreCase(s2)) tot++;
+				if(compare(s1,s2)) tot++;
 			}
 		}
 		return tot;
@@ -164,8 +168,10 @@ public class Repository {
 			IndexReader reader = DirectoryReader.open(index);
 			searcher = new IndexSearcher(reader);
 	
+	
 			//Fa la ricerca e restituisce un numero max di doc che matchano con la query
 			TopDocs docs=searcher.search(query, hitsPerPage);
+	
 			//trasformo la lista in un vettore di doc
 			ScoreDoc[] hits = docs.scoreDocs;
 			   
@@ -173,13 +179,13 @@ public class Repository {
 			for (int i = 0; i < hits.length; i++) {
 				int docId=hits[i].doc;
 				
-				Explanation explanation = searcher.explain(query, hits[i].doc);
-				System.out.println(explanation.toString());
+				//Explanation explanation = searcher.explain(query, hits[i].doc);
+				//System.out.println(explanation.getDescription());
 				
 				Document doc =searcher.doc(docId);
 				
 				 if (isOnResult(docId)) return;
-				    else addInResult(doc,docId,explanation);
+				    else addInResult(doc,docId, dp);
 			    }
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -187,7 +193,7 @@ public class Repository {
 		
 	}
 	
-	public void addInResult(Document doc, int docId, Explanation explanation) {
+	public void addInResult(Document doc, int docId, DocParser query) {
 		//prelevo tutti i campi salvati di doc
 		String text= doc.get(CV);
 		String [] tags_entity=doc.getValues(ENTITY);
@@ -204,16 +210,16 @@ public class Repository {
 	    
 	    //trovo i tag matchati
 	    List<String> tags_match= new LinkedList<String>();
-//	    (explanation.getEntity()).addAll(explanation.getDbpedia());
-//	    tags_entity_list.addAll(tags_dbpedia_list);
-//	    Iterator<String> it= tags_entity_list.iterator();
-//	    Iterator<String> it2= explanation.getEntity().iterator();
-//	    while(it.hasNext()){
-//	    	String tag= it.next();
-//	    	 while(it2.hasNext()){
-//	    	 if(tag.equals(it2.next())) tags_match.add(tag);
-//	    	 }
-//	    }
+	    (query.getEntity()).addAll(query.getDbpedia());
+	    tags_entity_list.addAll(tags_dbpedia_list);
+	    Iterator<String> it= tags_entity_list.iterator();
+	    Iterator<String> it2= query.getEntity().iterator();
+	    while(it.hasNext()){
+	    	String tag= it.next();
+	    	 while(it2.hasNext()){
+	    	 if(compare(tag, it2.next())) tags_match.add(tag);
+	    	 }
+	    }
 	    dp.setMatchedTags(tags_match);
 	    
 	    //inserisco docParser nella lista result
@@ -221,6 +227,12 @@ public class Repository {
     }
 	
 	
+	private boolean compare(String tag1, String tag2) {	
+		return ((tag1.toLowerCase().contains(tag2.toLowerCase())) ||
+				(tag2.toLowerCase().contains(tag1.toLowerCase())));
+	}
+
+
 	private List<String> FromVectorToList(String[] tags) {
 		List<String> tags_list= new LinkedList<String>();
 		for(int i=0; i< tags.length; i++){
