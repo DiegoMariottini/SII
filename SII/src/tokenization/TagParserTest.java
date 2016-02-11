@@ -15,8 +15,9 @@ public class TagParserTest {
 		List<DocParser> lista = new LinkedList<DocParser>();
 		lista = parser.parseQuery("calciatore");
 		for(DocParser dp : lista){
-			System.out.println(dp.getMatchedTags() + "\n");
+			System.out.println(dp.getText()+ " \n"+dp.getWeight() + "\n");
 		}
+		
 	}
 
 }
