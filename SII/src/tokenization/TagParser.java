@@ -99,20 +99,27 @@ public class TagParser {
 				  .field("long_text", "0")
 				  .asJson();
 		//print di check dell'oggetto json
-		//System.out.println(jsonResponse.getBody().toString() + "\n");
+		System.out.println(jsonResponse.getBody().toString() + "\n");
+		
 		JSONArray jsonArr = jsonResponse.getBody().getObject().getJSONArray("annotations");
 		for(int i=0;i<jsonArr.length();i++)
 		{
-		    JSONObject jOb = jsonArr.getJSONObject(i);
-		    JSONArray jObArr = jOb.getJSONArray("dbpedia_categories");
-		    String entity = jOb.getString("title");
-		    String[] dbcat = new String[jObArr.length()];
-		    for(int j=0; j<jObArr.length(); j++){
-		    	dbcat[j] = jObArr.getString(j);
-		    };
-		    List<String> dbcatList = new LinkedList<String>(Arrays.asList(dbcat));
-		    tagMap.get("entity").add(entity);
-		    tagMap.get("dbpedia_cat").addAll(dbcatList);
+			JSONObject jOb = jsonArr.getJSONObject(i);
+			if(jOb.has("title")){
+				//print di check
+				System.out.println(jOb.toString() + "\n");
+				JSONArray jObArr = jOb.getJSONArray("dbpedia_categories");
+				//print di check
+				System.out.println(jObArr.toString() + "\n");
+				String entity = jOb.getString("title");
+				String[] dbcat = new String[jObArr.length()];
+				for(int j=0; j<jObArr.length(); j++){
+					dbcat[j] = jObArr.getString(j);
+				};
+				List<String> dbcatList = new LinkedList<String>(Arrays.asList(dbcat));
+				tagMap.get("entity").add(entity);
+				tagMap.get("dbpedia_cat").addAll(dbcatList);
+			}
 		  }
 		return tagMap;
 	}
