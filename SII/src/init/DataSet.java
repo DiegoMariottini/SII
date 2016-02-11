@@ -25,7 +25,6 @@ public class DataSet {
 		while (it.hasNext()){
 			String text= it.next();
 			tag= tg.parseCV(text);
-			tg.updateList(tag);
 		}
 	}
 	

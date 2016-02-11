@@ -78,13 +78,6 @@ public class TagParser {
 		return listDP;
 	}
 	
-	//metodo per aggiornare la lista di tag
-	public void updateList(List<String> tag){
-		//sostituisce la lista dei tag del documento con quella data in input
-		//TODO fare che sistemi anche la lista delle categorie di dbpedia?
-		dp.setEntity(tag);
-	}
-	
 	//metodo per ricavare la lista di tag tramite TAGME
 	private Map<String, LinkedList<String>> getTagsFromText(String text) throws UnirestException {
 		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
@@ -99,7 +92,7 @@ public class TagParser {
 				  .field("long_text", "0")
 				  .asJson();
 		//print di check dell'oggetto json
-		System.out.println(jsonResponse.getBody().toString() + "\n");
+		//System.out.println(jsonResponse.getBody().toString() + "\n");
 		
 		JSONArray jsonArr = jsonResponse.getBody().getObject().getJSONArray("annotations");
 		for(int i=0;i<jsonArr.length();i++)
@@ -107,10 +100,10 @@ public class TagParser {
 			JSONObject jOb = jsonArr.getJSONObject(i);
 			if(jOb.has("title")){
 				//print di check
-				System.out.println(jOb.toString() + "\n");
+				//System.out.println(jOb.toString() + "\n");
 				JSONArray jObArr = jOb.getJSONArray("dbpedia_categories");
 				//print di check
-				System.out.println(jObArr.toString() + "\n");
+				//System.out.println(jObArr.toString() + "\n");
 				String entity = jOb.getString("title");
 				String[] dbcat = new String[jObArr.length()];
 				for(int j=0; j<jObArr.length(); j++){
