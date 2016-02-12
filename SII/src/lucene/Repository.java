@@ -48,19 +48,19 @@ public class Repository {
 	private final int DBPEDIA_ON_ENTITY = 2;
 	private final int DBPEDIA_ON_DBPEDIA = 1;
 
-	public Repository() {
+	public Repository(int value) {
 		analyzer = new StandardAnalyzer();
-		
-		//directory random
-		index = new RAMDirectory(); 
-
-		// directory definitiva
-//		try {
-//			index = FSDirectory.open(Paths.get("myLucene")); 
-//		} catch (IOException e) {
-//			System.out.println("Errore apertura file myLucene");
-//		}
-
+		if (value == 0) {
+			// directory definitiva
+			try {
+				index = FSDirectory.open(Paths.get("myLucene"));
+			} catch (IOException e) {
+				System.out.println("Errore apertura file myLucene");
+			}
+		} else {
+			// directory random
+			index = new RAMDirectory();
+		}
 	}
 
 	// aggiungi un cv a Lucene

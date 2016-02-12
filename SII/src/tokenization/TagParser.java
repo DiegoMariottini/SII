@@ -20,7 +20,7 @@ public class TagParser {
 	//Costruttore
 	public TagParser(){
 		dp = new DocParser();
-		rep = new Repository();
+		rep = new Repository(1);
 	}
 	
 	//metodo per trovare i tag di un CV in input
