@@ -40,26 +40,6 @@ public class TagParser {
 		//aggiungo il cv nel repository
 		rep.addDocParser(dp);
 	}
-	
-	/*
-	//METODO PROVVISORIO PER FARE TEST
-	//TODO da cancellare al termine delle prove
-	//metodo per parsare un nuovo cv
-	public List<String> parseCV(String text) throws UnirestException{
-		dp.setText(text);
-		//genero le liste di tag da TAGME
-		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
-		tagMap = getTagsFromText(text);
-		//imposto il DocParser
-		dp.setEntity(tagMap.get("entity"));
-		dp.setDbpedia(tagMap.get("dbpedia_cat"));
-		//aggiungo il cv nel repository
-		rep.addDocParser(dp);
-		//print di check della lista di tag ottenuti
-		//System.out.println(tagMap.get("entity").toString());
-		//System.out.println(tagMap.get("dbpedia_cat").toString());
-		return tagMap.get("entity");
-	}*/
 
 	//metodo per parsare la query
 	public List<DocParser> parseQuery(String text) throws UnirestException{
