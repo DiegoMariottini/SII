@@ -6,12 +6,13 @@ import java.util.List;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import tokenization.DocParser;
 import tokenization.TagParser;
 
 public class DataSet {
 	private List<String> cv;	
 	private TagParser tg;
-	private List<String> tag;
+	DocParser dp = new DocParser();
 	
 	public DataSet(){
 		cv= new LinkedList<String>();
@@ -24,7 +25,8 @@ public class DataSet {
 		Iterator<String> it= cv.iterator();
 		while (it.hasNext()){
 			String text= it.next();
-			tag= tg.parseCV(text);
+			dp = tg.parseTags(text);
+			tg.saveCV(dp);
 		}
 	}
 	

@@ -41,6 +41,7 @@ public class TagParser {
 		rep.addDocParser(dp);
 	}
 	
+	/*
 	//METODO PROVVISORIO PER FARE TEST
 	//TODO da cancellare al termine delle prove
 	//metodo per parsare un nuovo cv
@@ -58,7 +59,7 @@ public class TagParser {
 		//System.out.println(tagMap.get("entity").toString());
 		//System.out.println(tagMap.get("dbpedia_cat").toString());
 		return tagMap.get("entity");
-	}
+	}*/
 
 	//metodo per parsare la query
 	public List<DocParser> parseQuery(String text) throws UnirestException{
@@ -112,6 +113,10 @@ public class TagParser {
 				List<String> dbcatList = new LinkedList<String>(Arrays.asList(dbcat));
 				tagMap.get("entity").add(entity);
 				tagMap.get("dbpedia_cat").addAll(dbcatList);
+			}
+			else {
+				String entity = jOb.getString("spot");
+				tagMap.get("entity").add(entity);
 			}
 		  }
 		return tagMap;
