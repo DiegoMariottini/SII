@@ -17,7 +17,7 @@ public class Test {
 //		curricula.add("Cameriera, Napoli");
 		
 		
-		TagParser parser = new TagParser();
+		/*TagParser parser = new TagParser();
 		DocParser dp= new DocParser();
 		for(String s : curricula){
 			dp = parser.parseTags(s);
@@ -28,7 +28,7 @@ public class Test {
 		lista = parser.parseQuery("maestra d'asilo");
 		for(DocParser dp1 : lista){
 			System.out.println(dp1.getText()+ " \n"+dp1.getWeight() + "\n");
-		}
+		}*/
 		
 	}
 }

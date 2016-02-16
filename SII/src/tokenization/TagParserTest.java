@@ -30,7 +30,7 @@ public class TagParserTest {
 		CV.add("");
 		CV.add("");
 		CV.add("");*/
-		for(String s : CV){
+		/*for(String s : CV){
 			dp = parser.parseTags(s);
 			parser.saveCV(dp);
 		}
@@ -39,7 +39,7 @@ public class TagParserTest {
 		for(DocParser dpi : lista){
 			System.out.println(dpi.getText() + "\n");
 		}
-		
+		*/
 	}
 
 }

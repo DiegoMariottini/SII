@@ -24,7 +24,7 @@ public class TagParser {
 	}
 	
 	//metodo per trovare i tag di un CV in input
-	public DocParser parseTags(String text) throws UnirestException{
+	public List<String> parseTags(String text) throws UnirestException{
 		dp.setText(text);
 		//genero le liste di tag da TAGME
 		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
@@ -32,7 +32,10 @@ public class TagParser {
 		//imposto il DocParser
 		dp.setEntity(tagMap.get("entity"));
 		dp.setDbpedia(tagMap.get("dbpedia_cat"));
-		return dp;
+		List<String> tagList = new LinkedList<String>();
+		tagList.addAll(dp.getEntity());
+		tagList.addAll(dp.getDbpedia());
+		return tagList;
 	}
 	
 	//save della lista di tag
