@@ -20,11 +20,60 @@ public class TagParser {
 	//Costruttore
 	public TagParser(){
 		rep = new Repository(1);
+		dp = new DocParser();
 	}
 	
 	//metodo per trovare i tag di un CV in input
+		public List<String> parseTags(String text) throws UnirestException{
+			//genero le liste di tag da TAGME
+			Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
+			tagMap = getTagsFromText(text);
+			List<String> tagList = new LinkedList<String>();
+			tagList.addAll(tagMap.get("entity"));
+			tagList.addAll(tagMap.get("dbpedia_cat"));
+			return tagList;
+		}
+		
+		//save della lista di tag
+		public void saveCV(String text, List<String> tagList) throws UnirestException{
+			dp.setText(text);
+			//genero le liste di tag da TAGME
+			Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
+			tagMap = getTagsFromText(text);
+			//imposto il DocParser
+			dp.setEntity(tagMap.get("entity"));
+			dp.setDbpedia(tagMap.get("dbpedia_cat"));
+			//prendo le liste dei tag dal DocParser dp
+			List<String> listEntity = dp.getEntity();
+			List<String> listDBPed = dp.getDbpedia();
+			//rimozione degli elementi di listEntity e listDBPed che non sono in tagList
+			for (String s : listEntity){
+				if (!(tagList.contains(s))){
+					listEntity.remove(s);
+				}
+			}
+			for (String s : listDBPed){
+				if (!(tagList.contains(s))){
+					listDBPed.remove(s);
+				}
+			}
+			// aggiunti gli elementi di tagList non presenti nelle liste di dp
+			for (String s : tagList){
+				if(!(listEntity.contains(s) || (listDBPed.contains(s)))){
+					listEntity.add(s);
+				}
+			}
+			rep.addDocParser(dp);		
+		}
+		
+		//metodo per salvare un nuovo documento nel repository
+		public void saveCV(DocParser dp){
+			//aggiungo il cv nel repository
+			rep.addDocParser(dp);
+		}
+	/*
+	//metodo per trovare i tag di un CV in input
 	public List<String> parseTags(String text) throws UnirestException{
-		dp = new DocParser();
 		dp.setText(text);
 		//genero le liste di tag da TAGME
 		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
@@ -68,10 +117,9 @@ public class TagParser {
 		//aggiungo il cv nel repository
 		rep.addDocParser(dp);
 	}
-
+ */
 	//metodo per parsare la query
 	public List<DocParser> parseQuery(String text) throws UnirestException{
-		dp = new DocParser();
 		//genero le liste di tag della query da TAGME
 		Map<String, LinkedList<String>> qtagMap = new HashMap<String, LinkedList<String>>();
 		qtagMap = getTagsFromText(text);
