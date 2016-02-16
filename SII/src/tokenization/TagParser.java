@@ -35,6 +35,31 @@ public class TagParser {
 		return dp;
 	}
 	
+	//save della lista di tag
+	public void saveCV(List<String> tagList){
+		//prendo le liste dei tag dal DocParser dp
+		List<String> listEntity = dp.getEntity();
+		List<String> listDBPed = dp.getDbpedia();
+		//rimozione degli elementi di listEntity e listDBPed che non sono in tagList
+		for (String s : listEntity){
+			if (!(tagList.contains(s))){
+				listEntity.remove(s);
+			}
+		}
+		for (String s : listDBPed){
+			if (!(tagList.contains(s))){
+				listDBPed.remove(s);
+			}
+		}
+		// aggiunti gli elementi di tagList non presenti nelle liste di dp
+		for (String s : tagList){
+			if(!(listEntity.contains(s) || (listDBPed.contains(s)))){
+				listEntity.add(s);
+			}
+		}
+		rep.addDocParser(dp);		
+	}
+	
 	//metodo per salvare un nuovo documento nel repository
 	public void saveCV(DocParser dp){
 		//aggiungo il cv nel repository
