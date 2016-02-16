@@ -71,6 +71,7 @@ public class TagParser {
 
 	//metodo per parsare la query
 	public List<DocParser> parseQuery(String text) throws UnirestException{
+		dp = new DocParser();
 		//genero le liste di tag della query da TAGME
 		Map<String, LinkedList<String>> qtagMap = new HashMap<String, LinkedList<String>>();
 		qtagMap = getTagsFromText(text);
