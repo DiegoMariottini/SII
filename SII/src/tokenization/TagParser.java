@@ -19,12 +19,12 @@ public class TagParser {
 
 	//Costruttore
 	public TagParser(){
-		dp = new DocParser();
 		rep = new Repository(1);
 	}
 	
 	//metodo per trovare i tag di un CV in input
 	public List<String> parseTags(String text) throws UnirestException{
+		dp = new DocParser();
 		dp.setText(text);
 		//genero le liste di tag da TAGME
 		Map<String, LinkedList<String>> tagMap = new HashMap<String, LinkedList<String>>();
