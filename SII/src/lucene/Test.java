@@ -27,10 +27,10 @@ public class Test {
 //		DataSet ds= new DataSet();
 //		List<DocParser> list_default_doc= ds.getList();
 //		r.addDocsParser(list_default_doc);
-//		
+		
 		TagParser parser= new TagParser();
 		List<DocParser> lista = new LinkedList<DocParser>();
-		lista = parser.parseQuery("Roma");
+		lista = parser.parseQuery("Microsoft");
 		for(DocParser dp1 : lista){
 			System.out.println(dp1.getText()+ " \n"+dp1.getWeight() + "\n");
 		}

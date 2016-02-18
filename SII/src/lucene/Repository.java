@@ -56,9 +56,9 @@ public class Repository {
 					File f= new File("myLucene");
 					if(!f.exists()){
 						index = FSDirectory.open(Paths.get("myLucene"));
-//						DataSet ds= new DataSet();
-//						List<DocParser> list_default_doc= ds.getList();
-//						addDocsParser(list_default_doc);
+						DataSet ds= new DataSet();
+						List<DocParser> list_default_doc= ds.getList();
+						addDocsParser(list_default_doc);
 						}
 					
 					else index = FSDirectory.open(Paths.get("myLucene"));
@@ -126,7 +126,7 @@ public class Repository {
 			searchLucene(queryDbpediaOnEntity, dp);
 			searchLucene(queryDbpediaOnDbpedia, dp);
 			// calcolo i pesi di ogni doc presente in result
-			makeWeight(dp);
+			//makeWeight(dp);
 		} catch (ParseException e) {
 
 			System.out.println(e.getMessage());
@@ -134,40 +134,40 @@ public class Repository {
 		return result;
 	}
 
-	private void makeWeight(DocParser doc_query) {
-		Iterator<DocParser> it = result.iterator();
-		while (it.hasNext()) {
-			DocParser dp = it.next();
-			measureWeight(doc_query, dp);
-		}
+//	private void makeWeight(DocParser doc_query) {
+//		Iterator<DocParser> it = result.iterator();
+//		while (it.hasNext()) {
+//			DocParser dp = it.next();
+//			measureWeight(doc_query, dp);
+//		}
+//
+//	}
 
-	}
-
-	private void measureWeight(DocParser doc_query, DocParser doc_result) {
-		int count_eONe = counter(doc_query.getEntity(), doc_result.getEntity());
-		int count_eONd = counter(doc_query.getEntity(), doc_result.getDbpedia());
-		int count_dONe = counter(doc_query.getDbpedia(), doc_result.getEntity());
-		int count_dONd = counter(doc_query.getDbpedia(), doc_result.getDbpedia());
-		double weight = (count_eONe * ENTITY_ON_ENTITY) + (count_eONd * ENTITY_ON_DBPEDIA)
-				+ (count_dONe * DBPEDIA_ON_ENTITY) + (count_dONd * DBPEDIA_ON_DBPEDIA);
-		doc_result.setWeight(weight);
-	}
+//	private void measureWeight(DocParser doc_query, DocParser doc_result) {
+//		int count_eONe = counter(doc_query.getEntity(), doc_result.getEntity());
+//		int count_eONd = counter(doc_query.getEntity(), doc_result.getDbpedia());
+//		int count_dONe = counter(doc_query.getDbpedia(), doc_result.getEntity());
+//		int count_dONd = counter(doc_query.getDbpedia(), doc_result.getDbpedia());
+//		double weight = (count_eONe * ENTITY_ON_ENTITY) + (count_eONd * ENTITY_ON_DBPEDIA)
+//				+ (count_dONe * DBPEDIA_ON_ENTITY) + (count_dONd * DBPEDIA_ON_DBPEDIA);
+//		doc_result.setWeight(weight);
+//	}
 
 	// conta quanti elementi hanno in comune due liste
-	private int counter(List<String> list1, List<String> list2) {
-		int tot = 0;
-		Iterator<String> it1 = list1.iterator();
-		Iterator<String> it2 = list2.iterator();
-		while (it1.hasNext()) {
-			String s1 = it1.next();
-			while (it2.hasNext()) {
-				String s2 = it2.next();
-				if (compare(s1, s2))
-					tot++;
-			}
-		}
-		return tot;
-	}
+//	private int counter(List<String> list1, List<String> list2) {
+//		int tot = 0;
+//		Iterator<String> it1 = list1.iterator();
+//		Iterator<String> it2 = list2.iterator();
+//		while (it1.hasNext()) {
+//			String s1 = it1.next();
+//			while (it2.hasNext()) {
+//				String s2 = it2.next();
+//				if (compare(s1, s2))
+//					tot++;
+//			}
+//		}
+//		return tot;
+//	}
 
 	public String FromTagToString(String Startquery, List<String> tags) {
 		String query = Startquery;
@@ -214,6 +214,7 @@ public class Repository {
 
 	public void addInResult(Document doc, int docId, DocParser query) {
 		// prelevo tutti i campi salvati di doc
+		int weight=0;
 		String text = doc.get(CV);
 		String[] tags_entity = doc.getValues(ENTITY);
 		List<String> tags_entity_list = FromVectorToList(tags_entity);
@@ -231,23 +232,28 @@ public class Repository {
 		List<String> tags_match = new LinkedList<String>();
 		(query.getEntity()).addAll(query.getDbpedia());
 		tags_entity_list.addAll(tags_dbpedia_list);
-		Iterator<String> it = tags_entity_list.iterator();
-		Iterator<String> it2 = query.getEntity().iterator();
+		Iterator<String> it2 = tags_entity_list.iterator();
+		Iterator<String> it = query.getEntity().iterator();
 		while (it.hasNext()) {
 			String tag = it.next();
 			while (it2.hasNext()) {
-				if (compare(tag, it2.next()))
+				if (compare(tag, it2.next())){
 					tags_match.add(tag);
+					weight++;
+				}
+					
 			}
 		}
 		dp.setMatchedTags(tags_match);
-
+		// calcolo i pesi di ogni doc presente in result
+		dp.setWeight(weight);
 		// inserisco docParser nella lista result
 		result.add(dp);
 	}
 
 	private boolean compare(String tag1, String tag2) {
-		return ((tag1.toLowerCase().contains(tag2.toLowerCase())) || (tag2.toLowerCase().contains(tag1.toLowerCase())));
+		boolean result= ((tag1.toLowerCase().contains(tag2.toLowerCase())) || (tag2.toLowerCase().contains(tag1.toLowerCase())));
+		return result;
 	}
 
 	private List<String> FromVectorToList(String[] tags) {
