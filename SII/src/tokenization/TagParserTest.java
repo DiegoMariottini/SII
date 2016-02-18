@@ -43,7 +43,12 @@ public class TagParserTest {
 		*/
 	}
 	
-	/*DocParser doc= new DocParser();
+	/*
+	 // cv resta sempre cv, è l'unico che non cambia
+	 // cambiano entity_list, dbpedia_list, doc
+	   List<String> entity_list= new LinkedList<String>();
+	   List<String> dbpedia_list= new LinkedList<String>();
+	   DocParser doc= new DocParser();
 		doc.setText("");
 		entity_list.clear();
 		dbpedia_list.clear();

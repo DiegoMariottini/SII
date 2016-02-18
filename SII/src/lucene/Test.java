@@ -24,16 +24,18 @@ public class Test {
 		//}
 		
 		Repository r= new Repository(1);
-		DataSet ds= new DataSet();
-		List<DocParser> list_default_doc= ds.getList();
-		r.addDocsParser(list_default_doc);
-		
+//		DataSet ds= new DataSet();
+//		List<DocParser> list_default_doc= ds.getList();
+//		r.addDocsParser(list_default_doc);
+//		
 		TagParser parser= new TagParser();
 		List<DocParser> lista = new LinkedList<DocParser>();
-		lista = parser.parseQuery("Pescara");
+		lista = parser.parseQuery("Roma");
 		for(DocParser dp1 : lista){
 			System.out.println(dp1.getText()+ " \n"+dp1.getWeight() + "\n");
 		}
+		
+		
 		
 	}
 }
