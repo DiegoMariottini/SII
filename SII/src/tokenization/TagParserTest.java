@@ -1,5 +1,6 @@
 package tokenization;
 
+
 import java.util.*;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -41,5 +42,35 @@ public class TagParserTest {
 		}
 		*/
 	}
+	
+	/*DocParser doc= new DocParser();
+		doc.setText("");
+		entity_list.clear();
+		dbpedia_list.clear();
+		entity_list.add("");
+		entity_list.add("");
+		entity_list.add("");
+		entity_list.add("");
+		entity_list.add("");
+		entity_list.add("");
+		entity_list.add("");
+		entity_list.add("");
+		entity_list.add("");
+		entity_list.add("");
+		//
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		dbpedia_list.add("");
+		doc.setEntity(entity_list);
+		doc.setDbpedia(dbpedia_list);
+		cv.add(doc);
+		*/
 
 }

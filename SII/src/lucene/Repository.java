@@ -1,5 +1,6 @@
 package lucene;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -10,6 +11,9 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
+
+import init.DataSet;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
@@ -46,19 +50,29 @@ public class Repository {
 	private final int DBPEDIA_ON_DBPEDIA = 1;
 
 	public Repository(int value) {
-		analyzer = new StandardAnalyzer();
-		if (value == 0) {
-			// directory definitiva
-			try {
-				index = FSDirectory.open(Paths.get("myLucene"));
-			} catch (IOException e) {
-				System.out.println("Errore apertura file myLucene");
-			}
-		} else {
-			// directory random
-			index = new RAMDirectory();
+			analyzer = new StandardAnalyzer();
+				// directory definitiva
+				try {			
+					File f= new File("myLucene");
+					if(!f.exists()){
+						index = FSDirectory.open(Paths.get("myLucene"));
+//						DataSet ds= new DataSet();
+//						List<DocParser> list_default_doc= ds.getList();
+//						addDocsParser(list_default_doc);
+						}
+					
+					else index = FSDirectory.open(Paths.get("myLucene"));
+				} catch (IOException e) {
+					System.out.println("Errore apertura file myLucene");
+				}
 		}
-	}
+		
+		public void addDocsParser(List<DocParser> list){
+			Iterator<DocParser> it= list.iterator();
+			while (it.hasNext()){
+				addDocParser(it.next());
+			}
+		}
 
 	// aggiungi un cv a Lucene
 	public void addDocParser(DocParser dp) {
