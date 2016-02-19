@@ -30,9 +30,9 @@ public class Test {
 		
 		TagParser parser= new TagParser();
 		List<DocParser> lista = new LinkedList<DocParser>();
-		lista = parser.parseQuery("Microsoft");
+		lista = parser.parseQuery("Roma");
 		for(DocParser dp1 : lista){
-			System.out.println(dp1.getText()+ " \n"+dp1.getWeight() + "\n");
+			System.out.println(dp1.getText()+ " \n"+dp1.getWeight() + "\n"+ dp1.getMatchedTags().toString()+ "\n");
 		}
 		
 		

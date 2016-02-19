@@ -45,9 +45,7 @@ public class Repository {
 	private final String DBPEDIA = "dbpedia";
 	private final String CV = "cv";
 	private final int ENTITY_ON_ENTITY = 5; // valore peso
-	private final int ENTITY_ON_DBPEDIA = 3;
-	private final int DBPEDIA_ON_ENTITY = 2;
-	private final int DBPEDIA_ON_DBPEDIA = 1;
+	private final int ENTITY_ON_DBPEDIA = 2;
 
 	public Repository(int value) {
 			analyzer = new StandardAnalyzer();
@@ -231,19 +229,29 @@ public class Repository {
 		// trovo i tag matchati
 		List<String> tags_match = new LinkedList<String>();
 		(query.getEntity()).addAll(query.getDbpedia());
-		tags_entity_list.addAll(tags_dbpedia_list);
-		Iterator<String> it2 = tags_entity_list.iterator();
+		//tags_entity_list.addAll(tags_dbpedia_list);
+		int counter_tag_match_entity=0;
+		int counter_tag_match_dbpedia=0;
+		Iterator<String> itEnt = tags_entity_list.iterator();
+		Iterator<String> itDb = tags_entity_list.iterator();
 		Iterator<String> it = query.getEntity().iterator();
 		while (it.hasNext()) {
 			String tag = it.next();
-			while (it2.hasNext()) {
-				if (compare(tag, it2.next())){
+			while (itEnt.hasNext()) {
+				if (compare(tag, itEnt.next())){
 					tags_match.add(tag);
-					weight++;
+					counter_tag_match_entity++;
+				}
+			}
+			while (itDb.hasNext()) {
+				if (compare(tag, itDb.next())){
+						tags_match.add(tag);
+						counter_tag_match_dbpedia++;
 				}
 					
 			}
 		}
+		weight=(counter_tag_match_entity*ENTITY_ON_ENTITY)+(counter_tag_match_dbpedia*ENTITY_ON_DBPEDIA);
 		dp.setMatchedTags(tags_match);
 		// calcolo i pesi di ogni doc presente in result
 		dp.setWeight(weight);
