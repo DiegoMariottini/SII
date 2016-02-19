@@ -1,6 +1,5 @@
 package lucene;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -40,7 +39,8 @@ public class Repository {
 	private IndexSearcher searcher;
 	private IndexWriter w;
 	private List<DocParser> result = new LinkedList<DocParser>();
-	private int hitsPerPage = 10; // Numero massimo di cv che vengono restituiti dalla search
+	private int hitsPerPage = 10; // Numero massimo di cv che vengono restituiti
+									// dalla search
 	private final String ENTITY = "entity"; // nome dei campi
 	private final String DBPEDIA = "dbpedia";
 	private final String CV = "cv";
@@ -48,29 +48,30 @@ public class Repository {
 	private final int ENTITY_ON_DBPEDIA = 2;
 
 	public Repository(int value) {
-			analyzer = new StandardAnalyzer();
-				// directory definitiva
-				try {			
-					File f= new File("myLucene");
-					if(!f.exists()){
-						index = FSDirectory.open(Paths.get("myLucene"));
-						DataSet ds= new DataSet();
-						List<DocParser> list_default_doc= ds.getList();
-						addDocsParser(list_default_doc);
-						}
-					
-					else index = FSDirectory.open(Paths.get("myLucene"));
-				} catch (IOException e) {
-					System.out.println("Errore apertura file myLucene");
-				}
-		}
-		
-		public void addDocsParser(List<DocParser> list){
-			Iterator<DocParser> it= list.iterator();
-			while (it.hasNext()){
-				addDocParser(it.next());
+		analyzer = new StandardAnalyzer();
+		// directory definitiva
+		try {
+			File f = new File("myLucene");
+			if (!f.exists()) {
+				index = FSDirectory.open(Paths.get("myLucene"));
+				DataSet ds = new DataSet();
+				List<DocParser> list_default_doc = ds.getList();
+				addDocsParser(list_default_doc);
 			}
+
+			else
+				index = FSDirectory.open(Paths.get("myLucene"));
+		} catch (IOException e) {
+			System.out.println("Errore apertura file myLucene");
 		}
+	}
+
+	public void addDocsParser(List<DocParser> list) {
+		Iterator<DocParser> it = list.iterator();
+		while (it.hasNext()) {
+			addDocParser(it.next());
+		}
+	}
 
 	// aggiungi un cv a Lucene
 	public void addDocParser(DocParser dp) {
@@ -112,7 +113,8 @@ public class Repository {
 		String querystr1 = FromTagToString("", dp.getEntity());
 		String querystr2 = FromTagToString(querystr1, dp.getDbpedia());
 		try {
-			// parso le query, sia per le entity che per le dbpedia, per entrambe le query
+			// parso le query, sia per le entity che per le dbpedia, per
+			// entrambe le query
 			Query queryEntityOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr1);
 			Query queryEntityOnDbpedia = new QueryParser(DBPEDIA, analyzer).parse(querystr1);
 			Query queryDbpediaOnEntity = new QueryParser(ENTITY, analyzer).parse(querystr2);
@@ -124,48 +126,13 @@ public class Repository {
 			searchLucene(queryDbpediaOnEntity, dp);
 			searchLucene(queryDbpediaOnDbpedia, dp);
 			// calcolo i pesi di ogni doc presente in result
-			//makeWeight(dp);
+			// makeWeight(dp);
 		} catch (ParseException e) {
 
 			System.out.println(e.getMessage());
 		}
 		return result;
 	}
-
-//	private void makeWeight(DocParser doc_query) {
-//		Iterator<DocParser> it = result.iterator();
-//		while (it.hasNext()) {
-//			DocParser dp = it.next();
-//			measureWeight(doc_query, dp);
-//		}
-//
-//	}
-
-//	private void measureWeight(DocParser doc_query, DocParser doc_result) {
-//		int count_eONe = counter(doc_query.getEntity(), doc_result.getEntity());
-//		int count_eONd = counter(doc_query.getEntity(), doc_result.getDbpedia());
-//		int count_dONe = counter(doc_query.getDbpedia(), doc_result.getEntity());
-//		int count_dONd = counter(doc_query.getDbpedia(), doc_result.getDbpedia());
-//		double weight = (count_eONe * ENTITY_ON_ENTITY) + (count_eONd * ENTITY_ON_DBPEDIA)
-//				+ (count_dONe * DBPEDIA_ON_ENTITY) + (count_dONd * DBPEDIA_ON_DBPEDIA);
-//		doc_result.setWeight(weight);
-//	}
-
-	// conta quanti elementi hanno in comune due liste
-//	private int counter(List<String> list1, List<String> list2) {
-//		int tot = 0;
-//		Iterator<String> it1 = list1.iterator();
-//		Iterator<String> it2 = list2.iterator();
-//		while (it1.hasNext()) {
-//			String s1 = it1.next();
-//			while (it2.hasNext()) {
-//				String s2 = it2.next();
-//				if (compare(s1, s2))
-//					tot++;
-//			}
-//		}
-//		return tot;
-//	}
 
 	public String FromTagToString(String Startquery, List<String> tags) {
 		String query = Startquery;
@@ -194,7 +161,8 @@ public class Repository {
 			for (int i = 0; i < hits.length; i++) {
 				int docId = hits[i].doc;
 
-				// Explanation explanation = searcher.explain(query,hits[i].doc);
+				// Explanation explanation =
+				// searcher.explain(query,hits[i].doc);
 				// System.out.println(explanation.getDescription());
 
 				Document doc = searcher.doc(docId);
@@ -212,7 +180,7 @@ public class Repository {
 
 	public void addInResult(Document doc, int docId, DocParser query) {
 		// prelevo tutti i campi salvati di doc
-		int weight=0;
+		int weight = 0;
 		String text = doc.get(CV);
 		String[] tags_entity = doc.getValues(ENTITY);
 		List<String> tags_entity_list = FromVectorToList(tags_entity);
@@ -229,29 +197,29 @@ public class Repository {
 		// trovo i tag matchati
 		List<String> tags_match = new LinkedList<String>();
 		(query.getEntity()).addAll(query.getDbpedia());
-		//tags_entity_list.addAll(tags_dbpedia_list);
-		int counter_tag_match_entity=0;
-		int counter_tag_match_dbpedia=0;
+		// tags_entity_list.addAll(tags_dbpedia_list);
+		int counter_tag_match_entity = 0;
+		int counter_tag_match_dbpedia = 0;
 		Iterator<String> itEnt = tags_entity_list.iterator();
 		Iterator<String> itDb = tags_entity_list.iterator();
 		Iterator<String> it = query.getEntity().iterator();
 		while (it.hasNext()) {
 			String tag = it.next();
 			while (itEnt.hasNext()) {
-				if (compare(tag, itEnt.next())){
+				if (compare(tag, itEnt.next())) {
 					tags_match.add(tag);
 					counter_tag_match_entity++;
 				}
 			}
 			while (itDb.hasNext()) {
-				if (compare(tag, itDb.next())){
-						tags_match.add(tag);
-						counter_tag_match_dbpedia++;
+				if (compare(tag, itDb.next())) {
+					tags_match.add(tag);
+					counter_tag_match_dbpedia++;
 				}
-					
+
 			}
 		}
-		weight=(counter_tag_match_entity*ENTITY_ON_ENTITY)+(counter_tag_match_dbpedia*ENTITY_ON_DBPEDIA);
+		weight = (counter_tag_match_entity * ENTITY_ON_ENTITY) + (counter_tag_match_dbpedia * ENTITY_ON_DBPEDIA);
 		dp.setMatchedTags(tags_match);
 		// calcolo i pesi di ogni doc presente in result
 		dp.setWeight(weight);
@@ -260,7 +228,8 @@ public class Repository {
 	}
 
 	private boolean compare(String tag1, String tag2) {
-		boolean result= ((tag1.toLowerCase().contains(tag2.toLowerCase())) || (tag2.toLowerCase().contains(tag1.toLowerCase())));
+		boolean result = ((tag1.toLowerCase().contains(tag2.toLowerCase()))
+				|| (tag2.toLowerCase().contains(tag1.toLowerCase())));
 		return result;
 	}
 
@@ -283,17 +252,54 @@ public class Repository {
 		return false;
 	}
 
-		public void deleteDirectory (){
-			try{    		
-	    		File file = new File("myLucene");	        	
-	    		if(file.delete()){
-	    			System.out.println(file.getName() + " is deleted!");
-	    		}else{
-	    			System.out.println("Delete operation is failed.");
-	    		}
-	    	   
-	    	}catch(Exception e){    		
-	    		e.printStackTrace();	
-	    	}
+	public void deleteDirectory() {
+		try {
+			File file = new File("myLucene");
+			if (file.delete()) {
+				System.out.println(file.getName() + " is deleted!");
+			} else {
+				System.out.println("Delete operation is failed.");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+
+	// private void makeWeight(DocParser doc_query) {
+	// Iterator<DocParser> it = result.iterator();
+	// while (it.hasNext()) {
+	// DocParser dp = it.next();
+	// measureWeight(doc_query, dp);
+	// }
+	//
+	// }
+
+	// private void measureWeight(DocParser doc_query, DocParser doc_result) {
+	// int count_eONe = counter(doc_query.getEntity(), doc_result.getEntity());
+	// int count_eONd = counter(doc_query.getEntity(), doc_result.getDbpedia());
+	// int count_dONe = counter(doc_query.getDbpedia(), doc_result.getEntity());
+	// int count_dONd = counter(doc_query.getDbpedia(),
+	// doc_result.getDbpedia());
+	// double weight = (count_eONe * ENTITY_ON_ENTITY) + (count_eONd *
+	// ENTITY_ON_DBPEDIA)
+	// + (count_dONe * DBPEDIA_ON_ENTITY) + (count_dONd * DBPEDIA_ON_DBPEDIA);
+	// doc_result.setWeight(weight);
+	// }
+
+	// conta quanti elementi hanno in comune due liste
+	// private int counter(List<String> list1, List<String> list2) {
+	// int tot = 0;
+	// Iterator<String> it1 = list1.iterator();
+	// Iterator<String> it2 = list2.iterator();
+	// while (it1.hasNext()) {
+	// String s1 = it1.next();
+	// while (it2.hasNext()) {
+	// String s2 = it2.next();
+	// if (compare(s1, s2))
+	// tot++;
+	// }
+	// }
+	// return tot;
+	// }
 }
