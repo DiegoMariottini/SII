@@ -15,12 +15,13 @@ import tokenization.TagParser;
 
 public class Test {
 	public static void main(String[] args) throws UnirestException {
-		String cv="Ragazza italiana di Roma, laureata in ingegneria informatica alla Sapienza e alla magistrale a Roma tre. Esperienza di anni presso azinede di settore quali Google, Microsoft, Facebook, Whatsapp. Specializzata in programmazione java, android, c, c++, programmazione a oggetti, html, xml. Disponibile a viaggiare anche all'estero. Esperta in lingua inglese, francese, tedesco e spagnolo.";
-		List<String> tags= new LinkedList<String>();
-		TagParser parser= new TagParser();
-		tags= parser.parseTags(cv);
-		tags.remove(0);
-		parser.saveCV(cv, tags);
+//		String cv="Il corso prenderà  in esame vari metodi per la progettazione, l'implementazione e la sperimentazione di sistemi adattivi su Web, realizzati mediante tecniche di Intelligenza Artificiale. Particolare attenzione verrà  posta ai sistemi di Information Retrieval, come i motori di ricerca, e a nuove ed emergenti tecnologie idonee per la realizzazione della prossima generazione di strumenti di ricerca intelligenti e personalizzati. Verranno studiati i modelli di retrieval classici, come il modello vector space e i modelli probabilistici, le tecniche di ranking dei documenti, così come l'algoritmo PageRank utilizzato da Google. Saranno affrontati i metodi di Machine Learning in Information Retrieval, incluse le tecniche per la Sentiment Analysis, i metodi di User Modeling necessari per la ricerca personalizzata, i sistemi di raccomandazione, la scoperta e l'analisi delle comunità on-line e social network (come ad es. Facebook e Twitter). Infine verranno descritti i metodi statistici per la valutazione sperimentale dei suddetti sistemi.";
+//		List<String> tags= new LinkedList<String>();
+//		TagParser parser= new TagParser();
+//		tags= parser.parseTags(cv);
+//		parser.saveCV(cv, tags);
+//		
+//		System.out.println(tags.toString());
 		
 //		List<String> curricula = new LinkedList<String>();
 //		File f= new File("myLucene");
@@ -30,18 +31,18 @@ public class Test {
 //			curricula.add("Cameriera, Napoli");
 		//}
 		
-//		Repository r= new Repository(1);
+		Repository r= new Repository(1);
 //		DataSet ds= new DataSet();
 //		List<DocParser> list_default_doc= ds.getList();
 //		r.addDocsParser(list_default_doc);
 //		
-//		TagParser parser= new TagParser();
-//		List<DocParser> lista = new LinkedList<DocParser>();
-//		lista = parser.parseQuery("Roma");
-//		for(DocParser dp1 : lista){
-//			System.out.println(dp1.getText()+ " \n"+dp1.getWeight() + "\n"+ dp1.getMatchedTags().toString()+ "\n");
-//		}
-//		
+		TagParser parser= new TagParser();
+		List<DocParser> lista = new LinkedList<DocParser>();
+		lista = parser.parseQuery("Roma");
+		for(DocParser dp1 : lista){
+			System.out.println(dp1.getText()+ " \n"+dp1.getWeight() + "\n"+ dp1.getMatchedTags().toString()+ "\n");
+		}
+		
 		
 		
 	}

@@ -39,6 +39,7 @@ public class Repository {
 	private IndexSearcher searcher;
 	private IndexWriter w;
 	private List<DocParser> result = new LinkedList<DocParser>();
+	private List<DocParser> temp = new LinkedList<DocParser>();
 	private int hitsPerPage = 10; // Numero massimo di cv che vengono restituiti
 									// dalla search
 	private final String ENTITY = "entity"; // nome dei campi
@@ -131,6 +132,7 @@ public class Repository {
 
 			System.out.println(e.getMessage());
 		}
+		ordinaResult();
 		return result;
 	}
 
@@ -167,10 +169,10 @@ public class Repository {
 
 				Document doc = searcher.doc(docId);
 
-				if (isOnResult(docId))
+				if (isOnTemp(docId))
 					return;
 				else
-					addInResult(doc, docId, dp);
+					addInTemp(doc, docId, dp);
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -178,7 +180,7 @@ public class Repository {
 
 	}
 
-	public void addInResult(Document doc, int docId, DocParser query) {
+	public void addInTemp(Document doc, int docId, DocParser query) {
 		// prelevo tutti i campi salvati di doc
 		int weight = 0;
 		String text = doc.get(CV);
@@ -224,7 +226,7 @@ public class Repository {
 		// calcolo i pesi di ogni doc presente in result
 		dp.setWeight(weight);
 		// inserisco docParser nella lista result
-		result.add(dp);
+		temp.add(dp);
 	}
 
 	private boolean compare(String tag1, String tag2) {
@@ -242,8 +244,8 @@ public class Repository {
 	}
 
 	// verifico se un doc è già presente nella lista
-	public boolean isOnResult(int docId) {
-		Iterator<DocParser> it = result.iterator();
+	public boolean isOnTemp(int docId) {
+		Iterator<DocParser> it = temp.iterator();
 		while (it.hasNext()) {
 			DocParser dp = it.next();
 			if (dp.getId() == docId)
@@ -264,6 +266,26 @@ public class Repository {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void ordinaResult(){
+		while(!temp.isEmpty()){
+			DocParser dc=maxDocParserInTemp();
+			result.add(dc);
+			temp.remove(dc);
+		}
+		
+	}
+
+	private DocParser maxDocParserInTemp() {
+		Iterator<DocParser> it= temp.iterator();
+		DocParser max= it.next();
+		while (it.hasNext()){
+			DocParser doc= it.next();
+			if(max.getWeight()<doc.getWeight())
+				max=doc;		
+		}
+		return max;
 	}
 
 	// private void makeWeight(DocParser doc_query) {
