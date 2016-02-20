@@ -1,20 +1,19 @@
 package init;
 
-
 import java.util.LinkedList;
 import java.util.List;
 
 import tokenization.DocParser;
 
-
 public class DataSet {
-	private List<DocParser> cv=new LinkedList<DocParser>();	
+	private List<DocParser> cv = new LinkedList<DocParser>();
 
-	public DataSet(){
-		List<String> entity_list1= new LinkedList<String>();
-		List<String> dbpedia_list1= new LinkedList<String>();
-		DocParser dp1= new DocParser();
-		dp1.setText("PAOLO ROSSI Residenza: Via dei Ciclamini, 4 Cap. 60500 Città Pescara Prov. PE Tel. ..085/22222Domicilio: Via .delle Rose, 15..Cap. .20100. Città Milano.. Prov. .MI. Tel. .02/333333.Cell. 335/555555e-mail info@cvlavoro.comNato a Pescara. il 26/6/1981. Nazionalità Italiana. Stato civile celibe. Patente di guida B. Servizio civile volontario svolto nel 2004 presso il Comune di Milano, area servizi sociali per i minori.");
+	public DataSet() {
+		List<String> entity_list1 = new LinkedList<String>();
+		List<String> dbpedia_list1 = new LinkedList<String>();
+		DocParser dp1 = new DocParser();
+		dp1.setText(
+				"PAOLO ROSSI Residenza: Via dei Ciclamini, 4 Cap. 60500 Città Pescara Prov. PE Tel. ..085/22222Domicilio: Via .delle Rose, 15..Cap. .20100. Città Milano.. Prov. .MI. Tel. .02/333333.Cell. 335/555555e-mail info@cvlavoro.comNato a Pescara. il 26/6/1981. Nazionalità Italiana. Stato civile celibe. Patente di guida B. Servizio civile volontario svolto nel 2004 presso il Comune di Milano, area servizi sociali per i minori.");
 		entity_list1.clear();
 		dbpedia_list1.clear();
 		entity_list1.add("Paolo Rossi");
@@ -37,11 +36,12 @@ public class DataSet {
 		dp1.setEntity(entity_list1);
 		dp1.setDbpedia(dbpedia_list1);
 		cv.add(dp1);
-		
-		List<String> entity_list2= new LinkedList<String>();
-		List<String> dbpedia_list2= new LinkedList<String>();
-		DocParser dp2= new DocParser();
-		dp2.setText("Sono un esperto di Web Marketing (campagne Google Adwords, Bing e Facebook) e posizionamento organico di siti web. Posso vantare un'esperienza di oltre 6 anni e la gestione con successo di budget pubblicitari ingenti. Metto a disposizione le mie competenze per aiutare le aziende ed i privati ad ottenere il massimo dalla loro presenza online. Lavoro come freelance, coadiuvato da un team di altri professionisti, anche loro freelance, in modo da garantire la massima professionalità e mantenere bassi i costi per il cliente.Città: Firenze, Provincia: Firenze");
+
+		List<String> entity_list2 = new LinkedList<String>();
+		List<String> dbpedia_list2 = new LinkedList<String>();
+		DocParser dp2 = new DocParser();
+		dp2.setText(
+				"Sono un esperto di Web Marketing (campagne Google Adwords, Bing e Facebook) e posizionamento organico di siti web. Posso vantare un'esperienza di oltre 6 anni e la gestione con successo di budget pubblicitari ingenti. Metto a disposizione le mie competenze per aiutare le aziende ed i privati ad ottenere il massimo dalla loro presenza online. Lavoro come freelance, coadiuvato da un team di altri professionisti, anche loro freelance, in modo da garantire la massima professionalità e mantenere bassi i costi per il cliente.Città: Firenze, Provincia: Firenze");
 		entity_list2.clear();
 		dbpedia_list2.clear();
 		entity_list2.add("Web marketing");
@@ -52,7 +52,7 @@ public class DataSet {
 		entity_list2.add("Pubblicità");
 		entity_list2.add("Internet");
 		entity_list2.add("Freelance");
-		entity_list2.add("Libero professionista");		
+		entity_list2.add("Libero professionista");
 		dbpedia_list2.add("Provincia di Firenze");
 		dbpedia_list2.add("Firenze");
 		dbpedia_list2.add("Marketing");
@@ -64,11 +64,12 @@ public class DataSet {
 		dp2.setEntity(entity_list2);
 		dp2.setDbpedia(dbpedia_list2);
 		cv.add(dp2);
-		
-		List<String> entity_list3= new LinkedList<String>();
-		List<String> dbpedia_list3= new LinkedList<String>();
-		DocParser dp3= new DocParser();
-		dp3.setText("Cerco lavoro come educatrice: ho esperienze in vari settori, dall'animazione all'assistenza ad personam ed anche come educatrice in asilo nido. tel 320.0645731, Città: Salò, Provincia: Brescia");
+
+		List<String> entity_list3 = new LinkedList<String>();
+		List<String> dbpedia_list3 = new LinkedList<String>();
+		DocParser dp3 = new DocParser();
+		dp3.setText(
+				"Cerco lavoro come educatrice: ho esperienze in vari settori, dall'animazione all'assistenza ad personam ed anche come educatrice in asilo nido. tel 320.0645731, Città: Salò, Provincia: Brescia");
 		entity_list3.clear();
 		dbpedia_list3.clear();
 		entity_list3.add("Educatrice");
@@ -88,11 +89,12 @@ public class DataSet {
 		dp3.setEntity(entity_list3);
 		dp3.setDbpedia(dbpedia_list3);
 		cv.add(dp3);
-		
-		List<String> entity_list4= new LinkedList<String>();
-		List<String> dbpedia_list4= new LinkedList<String>();
-		DocParser dp4= new DocParser();
-		dp4.setText("Anna Paola Conte, Via Ariosto 88, 40126 Bologna (Italia), +39 06123456 +39 312345678, annapaola.conte@example.it, OCCUPAZIONE DESIDERATA Gesitone risorse umane ESPERIENZA PROFESSIONALE gennaio 2005 - alla data attuale Assistente amministrativo Alma Mater Studiorum Via Zamboni 37 40126 Bologna, Gestione della documentazione contabile generale, fiscale e tributaria, relazione con la clientela e il pubblico, settembre 2001 - agosto 2004 Tirocinio Cooperativa Tirrenica Via Enrico Fermi 45 45133 Bologna Analisi Curriculum Vitae, gestione dei colloqui, rapporto con la clientela (fornitori, pubblico, personale interno)");
+
+		List<String> entity_list4 = new LinkedList<String>();
+		List<String> dbpedia_list4 = new LinkedList<String>();
+		DocParser dp4 = new DocParser();
+		dp4.setText(
+				"Anna Paola Conte, Via Ariosto 88, 40126 Bologna (Italia), +39 06123456 +39 312345678, annapaola.conte@example.it, OCCUPAZIONE DESIDERATA Gesitone risorse umane ESPERIENZA PROFESSIONALE gennaio 2005 - alla data attuale Assistente amministrativo Alma Mater Studiorum Via Zamboni 37 40126 Bologna, Gestione della documentazione contabile generale, fiscale e tributaria, relazione con la clientela e il pubblico, settembre 2001 - agosto 2004 Tirocinio Cooperativa Tirrenica Via Enrico Fermi 45 45133 Bologna Analisi Curriculum Vitae, gestione dei colloqui, rapporto con la clientela (fornitori, pubblico, personale interno)");
 		entity_list4.clear();
 		dbpedia_list4.clear();
 		entity_list4.add("Anna Paola Conte");
@@ -116,11 +118,12 @@ public class DataSet {
 		dp4.setEntity(entity_list4);
 		dp4.setDbpedia(dbpedia_list4);
 		cv.add(dp4);
-		
-		List<String> entity_list5= new LinkedList<String>();
-		List<String> dbpedia_list5= new LinkedList<String>();
-		DocParser dp5= new DocParser();
-		dp5.setText("ELETTRICISTA qualificato 48 anni italiano esperienza trentennale impianti elettrici e tecnologici civile ed industriale cerca serio impiego presso importante e strutturata azienda del settore no ag. servizi o interinali Roberto");
+
+		List<String> entity_list5 = new LinkedList<String>();
+		List<String> dbpedia_list5 = new LinkedList<String>();
+		DocParser dp5 = new DocParser();
+		dp5.setText(
+				"ELETTRICISTA qualificato 48 anni italiano esperienza trentennale impianti elettrici e tecnologici civile ed industriale cerca serio impiego presso importante e strutturata azienda del settore no ag. servizi o interinali Roberto");
 		entity_list5.clear();
 		dbpedia_list5.clear();
 		entity_list5.add("Elettricista");
@@ -139,9 +142,9 @@ public class DataSet {
 		dp5.setEntity(entity_list5);
 		dp5.setDbpedia(dbpedia_list5);
 		cv.add(dp5);
-		List<String> entity_list6= new LinkedList<String>();
-		List<String> dbpedia_list6= new LinkedList<String>();
-		DocParser dp6= new DocParser();
+		List<String> entity_list6 = new LinkedList<String>();
+		List<String> dbpedia_list6 = new LinkedList<String>();
+		DocParser dp6 = new DocParser();
 		dp6.setText("IDRAULICO ed elettricista esperto cerca lavoro anche come badante");
 		entity_list6.clear();
 		dbpedia_list6.clear();
@@ -155,12 +158,12 @@ public class DataSet {
 		dp6.setEntity(entity_list6);
 		dp6.setDbpedia(dbpedia_list6);
 		cv.add(dp6);
-		
-		
-		List<String> entity_list7= new LinkedList<String>();
-		List<String> dbpedia_list7= new LinkedList<String>();
-		DocParser dp7= new DocParser();
-		dp7.setText("RAGAZZA iscritta a garanzia giovani residente a Roma centro cerca azienda per stage addetta inserimento dati max 25 ore settimana esperienza segreteria preferenza campo: agroalimentare informatico lingue mail claudialidi@libero.it");
+
+		List<String> entity_list7 = new LinkedList<String>();
+		List<String> dbpedia_list7 = new LinkedList<String>();
+		DocParser dp7 = new DocParser();
+		dp7.setText(
+				"RAGAZZA iscritta a garanzia giovani residente a Roma centro cerca azienda per stage addetta inserimento dati max 25 ore settimana esperienza segreteria preferenza campo: agroalimentare informatico lingue mail claudialidi@libero.it");
 		entity_list7.clear();
 		dbpedia_list7.clear();
 		entity_list7.add("Garanzia giovani");
@@ -177,11 +180,12 @@ public class DataSet {
 		dp7.setEntity(entity_list7);
 		dp7.setDbpedia(dbpedia_list7);
 		cv.add(dp7);
-		
-		List<String> entity_list8= new LinkedList<String>();
-		List<String> dbpedia_list8= new LinkedList<String>();
-		DocParser dp8= new DocParser();
-		dp8.setText("AUTISTA patente B-D italiano 50enne diplomato informatico inoccupato non fumatore offresi come autista per commissioni o altro anche in centro risiedo a Roma Sud");
+
+		List<String> entity_list8 = new LinkedList<String>();
+		List<String> dbpedia_list8 = new LinkedList<String>();
+		DocParser dp8 = new DocParser();
+		dp8.setText(
+				"AUTISTA patente B-D italiano 50enne diplomato informatico inoccupato non fumatore offresi come autista per commissioni o altro anche in centro risiedo a Roma Sud");
 		entity_list8.clear();
 		dbpedia_list8.clear();
 		entity_list8.add("Autista");
@@ -198,11 +202,12 @@ public class DataSet {
 		dp8.setEntity(entity_list8);
 		dp8.setDbpedia(dbpedia_list8);
 		cv.add(dp8);
-		
-		List<String> entity_list9= new LinkedList<String>();
-		List<String> dbpedia_list9= new LinkedList<String>();
-		DocParser dp9= new DocParser();
-		dp9.setText("Carlo Bianchi, Ruolo: IT Manager, Responsabilità:  - Gestione di un parco macchine di circa 70 client. - Sviluppo, manutenzione e personalizzazione di applicativi Ad-hoc. - Implementazione e gestione di un architettura complessa che prevede la convivenza di  Linux e Windows sia dal lato client che dal lato server.- Help desk di primo e secondo livello, configurazione, manutenzione dei sistemi informativi aziendali a livello sistemistico. - Implementazione del gestionale. - Gestione fornitori.");
+
+		List<String> entity_list9 = new LinkedList<String>();
+		List<String> dbpedia_list9 = new LinkedList<String>();
+		DocParser dp9 = new DocParser();
+		dp9.setText(
+				"Carlo Bianchi, Ruolo: IT Manager, Responsabilità:  - Gestione di un parco macchine di circa 70 client. - Sviluppo, manutenzione e personalizzazione di applicativi Ad-hoc. - Implementazione e gestione di un architettura complessa che prevede la convivenza di  Linux e Windows sia dal lato client che dal lato server.- Help desk di primo e secondo livello, configurazione, manutenzione dei sistemi informativi aziendali a livello sistemistico. - Implementazione del gestionale. - Gestione fornitori.");
 		entity_list9.clear();
 		dbpedia_list9.clear();
 		entity_list9.add("Carlo Bianchi");
@@ -229,11 +234,12 @@ public class DataSet {
 		dp9.setEntity(entity_list9);
 		dp9.setDbpedia(dbpedia_list9);
 		cv.add(dp9);
-		
-		List<String> entity_list10= new LinkedList<String>();
-		List<String> dbpedia_list10= new LinkedList<String>();
-		DocParser dp10= new DocParser();
-		dp10.setText("C.V. Istituto tecnico industriale Enrico Fermi 73/100 informatica età 21 cerco lavoro come magazziniere operaio barista cameriere informatico iacchetti.daniele@gmail.com");
+
+		List<String> entity_list10 = new LinkedList<String>();
+		List<String> dbpedia_list10 = new LinkedList<String>();
+		DocParser dp10 = new DocParser();
+		dp10.setText(
+				"C.V. Istituto tecnico industriale Enrico Fermi 73/100 informatica età 21 cerco lavoro come magazziniere operaio barista cameriere informatico iacchetti.daniele@gmail.com");
 		entity_list10.clear();
 		dbpedia_list10.clear();
 		entity_list10.add("Istituto tecnico industriale");
@@ -253,10 +259,11 @@ public class DataSet {
 		dp10.setDbpedia(dbpedia_list10);
 		cv.add(dp10);
 
-		List<String> entity_list11= new LinkedList<String>();
-		List<String> dbpedia_list11= new LinkedList<String>();
-		DocParser dp11= new DocParser();
-		dp11.setText("RAGAZZO perito informatico 26 anni cerca lavoro esperienze lavorative cassiere addetto vendita corriere tecnico informatico rapido apprendimento curriculum disponibile contattare tramite email/cellulare");
+		List<String> entity_list11 = new LinkedList<String>();
+		List<String> dbpedia_list11 = new LinkedList<String>();
+		DocParser dp11 = new DocParser();
+		dp11.setText(
+				"RAGAZZO perito informatico 26 anni cerca lavoro esperienze lavorative cassiere addetto vendita corriere tecnico informatico rapido apprendimento curriculum disponibile contattare tramite email/cellulare");
 		entity_list11.clear();
 		dbpedia_list11.clear();
 		entity_list11.add("Perito informatico");
@@ -273,11 +280,12 @@ public class DataSet {
 		dp11.setEntity(entity_list11);
 		dp11.setDbpedia(dbpedia_list11);
 		cv.add(dp11);
-		
-		List<String> entity_list12= new LinkedList<String>();
-		List<String> dbpedia_list12= new LinkedList<String>();
-		DocParser dp12= new DocParser();
-		dp12.setText("LAVORO in ambito informatico e dei computer in generale. Varie conoscenze informatiche con attestato come Tecnico Sistemi Multimediali. Particolarmente capace a risolvere problemi sia a livello software che a livello hardware.");
+
+		List<String> entity_list12 = new LinkedList<String>();
+		List<String> dbpedia_list12 = new LinkedList<String>();
+		DocParser dp12 = new DocParser();
+		dp12.setText(
+				"LAVORO in ambito informatico e dei computer in generale. Varie conoscenze informatiche con attestato come Tecnico Sistemi Multimediali. Particolarmente capace a risolvere problemi sia a livello software che a livello hardware.");
 		entity_list12.clear();
 		dbpedia_list12.clear();
 		entity_list12.add("Informatico");
@@ -297,11 +305,12 @@ public class DataSet {
 		dp12.setEntity(entity_list12);
 		dp12.setDbpedia(dbpedia_list12);
 		cv.add(dp12);
-		
-		List<String> entity_list13= new LinkedList<String>();
-		List<String> dbpedia_list13= new LinkedList<String>();
-		DocParser dp13= new DocParser();
-		dp13.setText("CUOCO Italiano residente a Mentana serio professionale e molto devoto al lavoro cerca immediata sistemazione x lavoro solo serale in zona sono capace di apportare le mie conoscenze ed esperienze al servizio di chi volesse contattarmi antonio10alex@yahoo.it tel. 338 1633196");
+
+		List<String> entity_list13 = new LinkedList<String>();
+		List<String> dbpedia_list13 = new LinkedList<String>();
+		DocParser dp13 = new DocParser();
+		dp13.setText(
+				"CUOCO Italiano residente a Mentana serio professionale e molto devoto al lavoro cerca immediata sistemazione x lavoro solo serale in zona sono capace di apportare le mie conoscenze ed esperienze al servizio di chi volesse contattarmi antonio10alex@yahoo.it tel. 338 1633196");
 		entity_list13.clear();
 		dbpedia_list13.clear();
 		entity_list13.add("Cuoco");
@@ -314,11 +323,12 @@ public class DataSet {
 		dp13.setEntity(entity_list13);
 		dp13.setDbpedia(dbpedia_list13);
 		cv.add(dp13);
-		
-		List<String> entity_list14= new LinkedList<String>();
-		List<String> dbpedia_list14= new LinkedList<String>();
-		DocParser dp14= new DocParser();
-		dp14.setText("IMBIANCHINO altamente qualificato mastro muratore piastrellista specializzato esperto rifinito in opere murarie generali d'interni ed esterni ottima conoscenza disegno e materiali offresi per ditte e privati anche trasporto con furgoncino djmaaa@libero.it tel. 339 8178123");
+
+		List<String> entity_list14 = new LinkedList<String>();
+		List<String> dbpedia_list14 = new LinkedList<String>();
+		DocParser dp14 = new DocParser();
+		dp14.setText(
+				"IMBIANCHINO altamente qualificato mastro muratore piastrellista specializzato esperto rifinito in opere murarie generali d'interni ed esterni ottima conoscenza disegno e materiali offresi per ditte e privati anche trasporto con furgoncino djmaaa@libero.it tel. 339 8178123");
 		entity_list14.clear();
 		dbpedia_list14.clear();
 		entity_list14.add("Imbianchino");
@@ -337,11 +347,12 @@ public class DataSet {
 		dp14.setEntity(entity_list14);
 		dp14.setDbpedia(dbpedia_list14);
 		cv.add(dp14);
-		
-		List<String> entity_list15= new LinkedList<String>();
-		List<String> dbpedia_list15= new LinkedList<String>();
-		DocParser dp15= new DocParser();
-		dp15.setText("MURATORE autonomo abile esperto mastro 3°livello esegue lavori di ristrutturazioni complete piastrellista pittore rifinito pavimenti bagni cucine terrazzi muri intonaci rasature guaina porfido scorza copertina conoscenza materiali e disegno djmaaa@libero.it tel. 349 4387309");
+
+		List<String> entity_list15 = new LinkedList<String>();
+		List<String> dbpedia_list15 = new LinkedList<String>();
+		DocParser dp15 = new DocParser();
+		dp15.setText(
+				"MURATORE autonomo abile esperto mastro 3°livello esegue lavori di ristrutturazioni complete piastrellista pittore rifinito pavimenti bagni cucine terrazzi muri intonaci rasature guaina porfido scorza copertina conoscenza materiali e disegno djmaaa@libero.it tel. 349 4387309");
 		entity_list15.clear();
 		dbpedia_list15.clear();
 		entity_list15.add("Muratore");
@@ -368,11 +379,12 @@ public class DataSet {
 		dp15.setEntity(entity_list15);
 		dp15.setDbpedia(dbpedia_list15);
 		cv.add(dp15);
-		
-		List<String> entity_list16= new LinkedList<String>();
-		List<String> dbpedia_list16= new LinkedList<String>();
-		DocParser dp16= new DocParser();
-		dp16.setText("PASTICCERE con molta esperienza nella migliore pasticceria di Roma esperienza di lavoro: torta decorazioni torta cornetto sfoglia frolla mignon biscotti Gmail: mahajabin98@gmail.com tel. 342 7768040");
+
+		List<String> entity_list16 = new LinkedList<String>();
+		List<String> dbpedia_list16 = new LinkedList<String>();
+		DocParser dp16 = new DocParser();
+		dp16.setText(
+				"PASTICCERE con molta esperienza nella migliore pasticceria di Roma esperienza di lavoro: torta decorazioni torta cornetto sfoglia frolla mignon biscotti Gmail: mahajabin98@gmail.com tel. 342 7768040");
 		entity_list16.clear();
 		dbpedia_list16.clear();
 		entity_list16.add("Pasticcere");
@@ -394,11 +406,12 @@ public class DataSet {
 		dp16.setEntity(entity_list16);
 		dp16.setDbpedia(dbpedia_list16);
 		cv.add(dp16);
-		
-		List<String> entity_list17= new LinkedList<String>();
-		List<String> dbpedia_list17= new LinkedList<String>();
-		DocParser dp17= new DocParser();
-		dp17.setText("PENSIONATO ex insegnante informatica matematica musicista colto educato cerca incarico (tutor o insegn. informatica aiuto compiti lavori vari segreteria ecc.) disposto viaggiare no vendita. tel. 347 9629591");
+
+		List<String> entity_list17 = new LinkedList<String>();
+		List<String> dbpedia_list17 = new LinkedList<String>();
+		DocParser dp17 = new DocParser();
+		dp17.setText(
+				"PENSIONATO ex insegnante informatica matematica musicista colto educato cerca incarico (tutor o insegn. informatica aiuto compiti lavori vari segreteria ecc.) disposto viaggiare no vendita. tel. 347 9629591");
 		entity_list17.clear();
 		dbpedia_list17.clear();
 		entity_list17.add("Insegnante informatica");
@@ -418,128 +431,196 @@ public class DataSet {
 		dp17.setEntity(entity_list17);
 		dp17.setDbpedia(dbpedia_list17);
 		cv.add(dp17);
-		
-//		List<String> entity_list18= new LinkedList<String>();
-//		List<String> dbpedia_list18= new LinkedList<String>();
-//		DocParser dp18= new DocParser();
-//		dp18.setText("MANOVALE Pittore Controsoffitti Pavimentista Piastrellista del mestiere da generazione di famiglia cerca lavoro anche a giornata Max serietà e manifattura Claudio tel.333 8820598");
-//		entity_list18.clear();
-//		dbpedia_list18.clear();
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		entity_list18.add("");
-//		//
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dbpedia_list18.add("");
-//		dp18.setEntity(entity_list18);
-//		dp18.setDbpedia(dbpedia_list18);
-//		cv.add(dp18);
-//		
-//		List<String> entity_list19= new LinkedList<String>();
-//		List<String> dbpedia_list19= new LinkedList<String>();
-//		DocParser dp19= new DocParser();
-//		dp19.setText("40ENNE informatico sistemista Microsoft tecnico Hardware Web Designer esperienza 18 anni patente europea cerca lavoro nella grafica web html flash oppure qualsiasi altro lavoro ottime referenzte tel. ore pasti");
-//		entity_list19.clear();
-//		dbpedia_list19.clear();
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		entity_list19.add("");
-//		//
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dbpedia_list19.add("");
-//		dp19.setEntity(entity_list19);
-//		dp19.setDbpedia(dbpedia_list19);
-//		cv.add(dp19);
-//		
-//		List<String> entity_list20= new LinkedList<String>();
-//		List<String> dbpedia_list20= new LinkedList<String>();
-//		DocParser dp20= new DocParser();
-//		dp20.setText("CUOCO russo 32 anni con esperienza dall'antipasto al dessert esperto griglista carne e pesce ho fatto corso di Scuola Italiana Pizzaioli serio professionale puntuale residente Roma Acilia. Alex alexandr.roma55@gmail.com");
-//		entity_list20.clear();
-//		dbpedia_list20.clear();
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		entity_list20.add("");
-//		//
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dbpedia_list20.add("");
-//		dp20.setEntity(entity_list20);
-//		dp20.setDbpedia(dbpedia_list20);
-//		cv.add(dp20);
-//	
+
+		List<String> entity_list18 = new LinkedList<String>();
+		List<String> dbpedia_list18 = new LinkedList<String>();
+		DocParser dp18 = new DocParser();
+		dp18.setText(
+				"MANOVALE Pittore Controsoffitti Pavimentista Piastrellista del mestiere da generazione di famiglia cerca lavoro anche a giornata Max serietà e manifattura Claudio tel.333 8820598");
+		entity_list18.clear();
+		dbpedia_list18.clear();
+		entity_list18.add("Manovale");
+		entity_list18.add("Pittore");
+		entity_list18.add("Controsoffitti");
+		entity_list18.add("Pavimentista");
+		entity_list18.add("Piastrellista");
+		//
+		dbpedia_list18.add("Operaio");
+		dbpedia_list18.add("Pittura");
+		dbpedia_list18.add("Controsoffitto");
+		dbpedia_list18.add("Piastrella");
+		dp18.setEntity(entity_list18);
+		dp18.setDbpedia(dbpedia_list18);
+		cv.add(dp18);
+
+		List<String> entity_list19 = new LinkedList<String>();
+		List<String> dbpedia_list19 = new LinkedList<String>();
+		DocParser dp19 = new DocParser();
+		dp19.setText(
+				"40ENNE informatico sistemista Microsoft tecnico Hardware Web Designer esperienza 18 anni patente europea cerca lavoro nella grafica web html flash oppure qualsiasi altro lavoro ottime referenzte tel. ore pasti");
+		entity_list19.clear();
+		dbpedia_list19.clear();
+		entity_list19.add("Informatico");
+		entity_list19.add("Sistemista");
+		entity_list19.add("Microsoft");
+		entity_list19.add("Tecnico");
+		entity_list19.add("Hardware");
+		entity_list19.add("Web Designer");
+		entity_list19.add("Grafica");
+		entity_list19.add("Web");
+		entity_list19.add("Html");
+		entity_list19.add("Flash");
+		//
+		dbpedia_list19.add("Informatica");
+		dbpedia_list19.add("Sistemista");
+		dbpedia_list19.add("Microsoft");
+		dbpedia_list19.add("Hardware");
+		dbpedia_list19.add("Web design");
+		dbpedia_list19.add("Patente di guida");
+		dbpedia_list19.add("Grafica");
+		dbpedia_list19.add("HTML");
+		dbpedia_list19.add("Adobe Flash");
+		dp19.setEntity(entity_list19);
+		dp19.setDbpedia(dbpedia_list19);
+		cv.add(dp19);
+
+		List<String> entity_list20 = new LinkedList<String>();
+		List<String> dbpedia_list20 = new LinkedList<String>();
+		DocParser dp20 = new DocParser();
+		dp20.setText(
+				"CUOCO russo 32 anni con esperienza dall'antipasto al dessert esperto griglista carne e pesce ho fatto corso di Scuola Italiana Pizzaioli serio professionale puntuale residente Roma Acilia. Alex alexandr.roma55@gmail.com");
+		entity_list20.clear();
+		dbpedia_list20.clear();
+		entity_list20.add("Cuoco");
+		entity_list20.add("Griglista");
+		entity_list20.add("Carne");
+		entity_list20.add("Pesce");
+		entity_list20.add("Pizzaiolo");
+		entity_list20.add("Roma");
+		entity_list20.add("Aprilia");
+		//
+		dbpedia_list20.add("Cucina");
+		dbpedia_list20.add("Russia");
+		dbpedia_list20.add("Antipasto");
+		dbpedia_list20.add("Dessert");
+		dbpedia_list20.add("Carne");
+		dbpedia_list20.add("Pesce");
+		dbpedia_list20.add("Roma");
+		dbpedia_list20.add("Provincia di roma");
+		dp20.setEntity(entity_list20);
+		dp20.setDbpedia(dbpedia_list20);
+		cv.add(dp20);
+		 
+		List<String> entity_list21 = new LinkedList<String>();
+		List<String> dbpedia_list21 = new LinkedList<String>();
+		DocParser d1 = new DocParser();
+		d1.setText("DONNA polacca 40 anni buona conoscenza lingua italiana cerca lavoro come aiuto cameriera in hotels disponibilità immediata tel. 333 5899237");
+		entity_list21.clear();
+		dbpedia_list21.clear();
+		entity_list21.add("Polacca");
+		entity_list21.add("Lingua italiana");
+		entity_list21.add("Cameriera");
+		entity_list21.add("Hotels");
+		//
+		dbpedia_list21.add("Cameriere");
+		dbpedia_list21.add("Albergo");
+		dbpedia_list21.add("Lingua italiana");
+		dbpedia_list21.add("Lingua polacca");
+		dbpedia_list21.add("Hotel");
+		d1.setEntity(entity_list21);
+		d1.setDbpedia(dbpedia_list21);
+		cv.add(d1);
+
+		List<String> entity_list22 = new LinkedList<String>();
+		List<String> dbpedia_list22 = new LinkedList<String>();
+		DocParser d2 = new DocParser();
+		d2.setText("RAGAZZA 37 anni cerca lavoro a Roma città disponibilità full time o part time esperienza lavorativa cassiera cameriera sala antitaccheggio pubblicità massima serietà no perditempo claudymirabela@yahoo.it");
+		entity_list22.clear();
+		dbpedia_list22.clear();
+		entity_list22.add("Roma");
+		entity_list22.add("Full time");
+		entity_list22.add("Part time");
+		entity_list22.add("Cassiera");
+		entity_list22.add("Cameriera");
+		entity_list22.add("Antitaccheggio");
+		entity_list22.add("Pubblicità");
+		//
+		dbpedia_list22.add("Roma");
+		dbpedia_list22.add("Contratto di lavoro a tempo");
+		dbpedia_list22.add("Cameriere");
+		dbpedia_list22.add("Taccheggio");
+		dbpedia_list22.add("Pubblicità");
+		d2.setEntity(entity_list22);
+		d2.setDbpedia(dbpedia_list22);
+		cv.add(d2);
+
+		List<String> entity_list23 = new LinkedList<String>();
+		List<String> dbpedia_list23 = new LinkedList<String>();
+		DocParser d3 = new DocParser();
+		d3.setText("BADANTE dello Sri Lanka onesto affidabile con anni di esperienza malati di Alzheimer ictus Parkinson anche carrozzati disabili e allettati cerca lavoro ad ore lungo orario di notte e fisso a Roma massima serietà referenziato tel. 333 1833236");
+		entity_list23.clear();
+		dbpedia_list23.clear();
+		entity_list23.add("Badante");
+		entity_list23.add("Esperienza");
+		entity_list23.add("Malati di Alzheimer");
+		entity_list23.add("Ictus");
+		entity_list23.add("Parkinson");
+		entity_list23.add("Roma");
+		entity_list23.add("Carrozzina");
+		entity_list23.add("Disabili");
+		entity_list23.add("Allettati");
+		//
+		dbpedia_list23.add("Notte");
+		dbpedia_list23.add("Roma");
+		dbpedia_list23.add("Malattia");
+		dbpedia_list23.add("Morbo di Alzheimer");
+		dbpedia_list23.add("Ictus");
+		dbpedia_list23.add("Malattia idiopatica di Parkinson");
+		dbpedia_list23.add("Disabilità");
+		dbpedia_list23.add("Sedia a rotelle");
+		d3.setEntity(entity_list23);
+		d3.setDbpedia(dbpedia_list23);
+		cv.add(d3);
+
+		List<String> entity_list24 = new LinkedList<String>();
+		List<String> dbpedia_list24 = new LinkedList<String>();
+		DocParser d4 = new DocParser();
+		d4.setText("BADANTE 53 anni con referenze da gennaio disponibile cerca lavoro con vitto e alloggio h 24 Roma e provincia telefonare o inviare sms sarete richiamati tosha_mirka88@yahoo.it tel.0747 985082 0741 687388");
+		entity_list24.clear();
+		dbpedia_list24.clear();
+		entity_list24.add("Badante");
+		entity_list24.add("Roma");
+		entity_list24.add("Provincia di roma");
+		entity_list24.add("Vitto e alloggio");
+		//
+		dbpedia_list24.add("Badante");
+		dbpedia_list24.add("Roma");
+		dbpedia_list24.add("Provincia di roma");
+		d4.setEntity(entity_list24);
+		d4.setDbpedia(dbpedia_list24);
+		cv.add(d4);
+
+		List<String> entity_list25 = new LinkedList<String>();
+		List<String> dbpedia_list25 = new LinkedList<String>();
+		DocParser d5 = new DocParser();
+		d5.setText("SEGRETARIA con esperienza cerca lavoro full-time sono disponibile per un colloquio con lettera di referenze tel. 349 3530322");
+		entity_list25.clear();
+		dbpedia_list25.clear();
+		entity_list25.add("Segretaria");
+		entity_list25.add("Full-time");
+		//
+		dbpedia_list25.add("Segretaria");
+		dbpedia_list25.add("Aiutante");
+		dbpedia_list25.add("Assistente");
+		dbpedia_list25.add("Collaboratrice");
+		d5.setEntity(entity_list25);
+		d5.setDbpedia(dbpedia_list25);
+		cv.add(d5);
+
 	}
-	
-	
+
 	public List<DocParser> getList() {
 		return cv;
-	}	
-		
-//		cv.add("PAOLO ROSSI Residenza: Via dei Ciclamini, 4 Cap. 60500 Città Pescara Prov. PE Tel. ..085/22222Domicilio: Via .delle Rose, 15..Cap. .20100. Città Milano.. Prov. .MI. Tel. .02/333333.Cell. 335/555555e-mail info@cvlavoro.comNato a Pescara. il 26/6/1981. Nazionalità Italiana. Stato civile celibe. Patente di guida B. Servizio civile volontario svolto nel 2004 presso il Comune di Milano, area servizi sociali per i minori.");
-//		cv.add("Sono un esperto di Web Marketing (campagne Google Adwords, Bing e Facebook) e posizionamento organico di siti web. Posso vantare un'esperienza di oltre 6 anni e la gestione con successo di budget pubblicitari ingenti. Metto a disposizione le mie competenze per aiutare le aziende ed i privati ad ottenere il massimo dalla loro presenza online. Lavoro come freelance, coadiuvato da un team di altri professionisti, anche loro freelance, in modo da garantire la massima professionalità e mantenere bassi i costi per il cliente.Città: Firenze, Provincia: Firenze");
-//		cv.add("Cerco lavoro come educatrice: ho esperienze in vari settori, dall'animazione all'assistenza ad personam ed anche come educatrice in asilo nido. tel 320.0645731, Città: Salò, Provincia: Brescia");
-//		cv.add("Anna Paola Conte, Via Ariosto 88, 40126 Bologna (Italia), +39 06123456 +39 312345678, annapaola.conte@example.it, OCCUPAZIONE DESIDERATA Gesitone risorse umane ESPERIENZA PROFESSIONALE gennaio 2005 - alla data attuale Assistente amministrativo Alma Mater Studiorum Via Zamboni 37 40126 Bologna, Gestione della documentazione contabile generale, fiscale e tributaria, relazione con la clientela e il pubblico, settembre 2001 - agosto 2004 Tirocinio Cooperativa Tirrenica Via Enrico Fermi 45 45133 Bologna Analisi Curriculum Vitae, gestione dei colloqui, rapporto con la clientela (fornitori, pubblico, personale interno)");
-//		cv.add("ELETTRICISTA qualificato 48 anni italiano esperienza trentennale impianti elettrici e tecnologici civile ed industriale cerca serio impiego presso importante e strutturata azienda del settore no ag. servizi o interinali Roberto");
-//		cv.add("IDRAULICO ed elettricista esperto cerca lavoro anche come badante");
-//		cv.add("RAGAZZA iscritta a garanzia giovani residente a Roma centro cerca azienda per stage addetta inserimento dati max 25 ore settimana esperienza segreteria preferenza campo: agroalimentare informatico lingue mail claudialidi@libero.it");
-//		cv.add("AUTISTA patente B-D italiano 50enne diplomato informatico inoccupato non fumatore offresi come autista per commissioni o altro anche in centro risiedo a Roma Sud");
-//		cv.add("Carlo Bianchi, Ruolo: IT Manager, Responsabilità:  - Gestione di un parco macchine di circa 70 client. - Sviluppo, manutenzione e personalizzazione di applicativi Ad-hoc. - Implementazione e gestione di un architettura complessa che prevede la convivenza di  Linux e Windows sia dal lato client che dal lato server.- Help desk di primo e secondo livello, configurazione, manutenzione dei sistemi informativi aziendali a livello sistemistico. - Implementazione del gestionale. - Gestione fornitori.");
-//		cv.add("C.V. Istituto tecnico industriale Enrico Fermi 73/100 informatica età 21 cerco lavoro come magazziniere operaio barista cameriere informatico iacchetti.daniele@gmail.com");
-//		cv.add("RAGAZZO perito informatico 26 anni cerca lavoro esperienze lavorative cassiere addetto vendita corriere tecnico informatico rapido apprendimento curriculum disponibile contattare tramite email/cellulare");
-//		cv.add("40ENNE informatico sistemista Microsoft tecnico Hardware Web Designer esperienza 18 anni patente europea cerca lavoro nella grafica web html flash oppure qualsiasi altro lavoro ottime referenzte tel. ore pasti");
-//		cv.add("LAVORO in ambito informatico e dei computer in generale. Varie conoscenze informatiche con attestato come Tecnico Sistemi Multimediali. Particolarmente capace a risolvere problemi sia a livello software che a livello hardware.");
-//		cv.add("CUOCO russo 32 anni con esperienza dall'antipasto al dessert esperto griglista carne e pesce ho fatto corso di Scuola Italiana Pizzaioli serio professionale puntuale residente Roma Acilia. Alex alexandr.roma55@gmail.com");
-//		cv.add("MANOVALE Pittore Controsoffitti Pavimentista Piastrellista del mestiere da generazione di famiglia cerca lavoro anche a giornata Max serietà e manifattura Claudio tel.333 8820598");
-//		cv.add("PENSIONATO ex insegnante informatica matematica musicista colto educato cerca incarico (tutor o insegn. informatica aiuto compiti lavori vari segreteria ecc.) disposto viaggiare no vendita. tel. 347 9629591");
-//		cv.add("PASTICCERE con molta esperienza nella migliore pasticceria di Roma esperienza di lavoro: torta decorazioni torta cornetto sfoglia frolla mignon biscotti Gmail: mahajabin98@gmail.com tel. 342 7768040");
-//		cv.add("MURATORE autonomo abile esperto mastro 3°livello esegue lavori di ristrutturazioni complete piastrellista pittore rifinito pavimenti bagni cucine terrazzi muri intonaci rasature guaina porfido scorza copertina conoscenza materiali e disegno djmaaa@libero.it tel. 349 4387309");
-//		cv.add("IMBIANCHINO altamente qualificato mastro muratore piastrellista specializzato esperto rifinito in opere murarie generali d'interni ed esterni ottima conoscenza disegno e materiali offresi per ditte e privati anche trasporto con furgoncino djmaaa@libero.it tel. 339 8178123");
-//		cv.add("CUOCO Italiano residente a Mentana serio professionale e molto devoto al lavoro cerca immediata sistemazione x lavoro solo serale in zona sono capace di apportare le mie conoscenze ed esperienze al servizio di chi volesse contattarmi antonio10alex@yahoo.it tel. 338 1633196");
+	}
 
-
-	
 }
