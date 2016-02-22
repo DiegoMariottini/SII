@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.RAMDirectory;
 
 import init.DataSet;
 
@@ -22,6 +21,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.classic.QueryParserBase;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -109,10 +109,14 @@ public class Repository {
 	// cerca un cv su Lucene e restituisce una lista di doc che corrispondono ai
 	// parametri
 	public List<DocParser> search(DocParser dp) throws ParseException, IOException {
+		new QueryParser(ENTITY, analyzer);
 		// Trasformo lista di tag in due stringhe: una per i tag principali e
 		// uno per gli altri
-		String querystr1 = FromTagToString("", dp.getEntity());
-		String querystr2 = FromTagToString(querystr1, dp.getDbpedia());
+//		String querystr1 = FromTagToString("", dp.getEntity());
+//		String querystr2 = FromTagToString(querystr1, dp.getDbpedia());
+		String querystr1 = QueryParserBase.escape(dp.getEntity().toString());
+		String temp = FromTagToString(querystr1, dp.getDbpedia());
+		String querystr2 = QueryParserBase.escape(temp);
 		try {
 			// parso le query, sia per le entity che per le dbpedia, per
 			// entrambe le query
